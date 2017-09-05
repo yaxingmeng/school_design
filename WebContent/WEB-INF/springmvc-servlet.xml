@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+ <!-- 扫描web包, 将标注spring注解的类自动转化为bean, 同时完成bean的注入 -->  
+    <context:component-scan base-package="com.suiyi.jpa.controller" />  
+  <!-- 配置spring mvc视图解析器,将ModelAndView及字符串解析成具体的页面 ,  
+    在这里通过使用InternalResourceViewResolver为视图添加前后缀的方式进行解析-->  
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="viewClass" >  
+            <value>org.springframework.web.servlet.view.JstlView</value>  
+        </property>  
+        <property name="prefix" >  
+            <value>/</value>  
+        </property>  
+        <property name="suffix" >  
+            <value>.jsp</value>  
+        </property>  
+    </bean>
+    </beans>  

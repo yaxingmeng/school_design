@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<!-- 扫描service和dao包, 将标注spring注解的类自动转化为bean, 同时完成bean的注入 -->
+	<context:component-scan base-package="com.suiyi.jpa" />
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/item" />
+		<property name="user" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	<!-- 配置 JPA 的 EntityManagerFactory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="packagesToScan" value="com.suiyi.jpa.bean"></property>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_query_cache">false</prop>
+			</props>
+		</property>
+		<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>
+	</bean>
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
+	</bean>
+
+	<!-- 配置支持基于注解的事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 配置 SpringData -->
+	<jpa:repositories base-package="com.suiyi.jpa"
+		entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
+
+
+	<!-- 配置SessionFactory <bean class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" 
+		id="sessionFactory"> <property name="dataSource" ref="dataSource" /> <property 
+		value="classpath:hibernate.cfg.xml" name="configLocation" /> <property value="classpath:com/suiyi/spring/model/*.hbm.xml" 
+		name="mappingLocations" /> <property name="packagesToScan" value="com.suiyi.spring.model" 
+		/> </bean> -->
+	<!-- 配置Spring 的声明式事务 -->
+	<!-- 1. 配置事务管理器 <bean class="org.springframework.orm.hibernate4.HibernateTransactionManager" 
+		id="transactionManager"> <property name="sessionFactory" ref="sessionFactory" 
+		/> </bean> -->
+
+	<!--配置事务管理器 通过aop配置让所有service包下所有bean的方法拥有事务 -->
+	<tx:annotation-driven />
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED"></tx:method>
+		</tx:attributes>
+	</tx:advice>
+	<!-- pointcut中expression的意思是: 第一个*表示方法的返回值可以是任意的. 第一个..表示service包下任意的class. 
+		第二个*表示service包下任意class中的任意方法. 第一个..表示service包下任意class中的任意方法中的参数可以是任意的. (注意第一个星号后面必须要有一个空格,否则会报错误) -->
+	<!-- <aop:config proxy-target-class="true"> <aop:pointcut id="serviceMethod" 
+		expression="execution(* com.suiyi.spring.service..*(..))"></aop:pointcut> 
+		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"></aop:advisor> 
+		</aop:config> -->
+</beans>
