@@ -1,28 +1,37 @@
 package com.suiyi.jpa.bean;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "stock")
-public class Stock {
+@Table(name = "instock")
+public class InStock {
 	@Id
-	@Column(name = "id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer id;
-
-	@OneToOne
-	@JoinColumn(name = "goods_id")
+	
+	@ManyToOne
+	@JoinColumn(name="provide_id")
+	private Provide provide;
+	
+	@ManyToOne
+	@JoinColumn(name="goods_id")
 	private Goods goods;
 	
 	@Column(name="amount")
 	private Integer amount;
+	
+	@Column(name="intime")
+	private Date intime;
 
 	public Integer getId() {
 		return id;
@@ -33,6 +42,14 @@ public class Stock {
 	}
 
 	
+
+	public Provide getProvide() {
+		return provide;
+	}
+
+	public void setProvide(Provide provide) {
+		this.provide = provide;
+	}
 
 	public Goods getGoods() {
 		return goods;
@@ -49,6 +66,14 @@ public class Stock {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-	
 
+	public Date getIntime() {
+		return intime;
+	}
+
+	public void setIntime(Date intime) {
+		this.intime = intime;
+	}
+	
+	
 }

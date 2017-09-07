@@ -8,7 +8,6 @@
 </head>
 <body>
 <form action="addGoods.do">
-id:<input type="text" name="id"><br>
 name:<input type="text" name="name">
 <input type="submit" value="提交">
 </form>

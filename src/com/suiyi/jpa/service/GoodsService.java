@@ -23,11 +23,10 @@ public class GoodsService {
 	/**
 	 * 增加商品
 	 */
-	public void addGoods(Integer id,String name){
+	public Goods addGoods(String name){
 		Goods goods=new Goods();
-		goods.setId(id);
 		goods.setName(name);
-		goodsRepository.save(goods);
+		return goodsRepository.save(goods);
 	}
 /**
  * 获取所需修改的商品信息
@@ -42,6 +41,22 @@ public class GoodsService {
 		Goods goods=new Goods();
 		goods.setId(id);
 		goods.setName(name);
+		goodsRepository.save(goods);
+	}
+	
+	public Goods findById(Integer id)
+	{
+		return goodsRepository.findById(id);
+	}
+	/**
+	 * 修改商品状态
+	 */
+	public void changeState(Goods goods,Integer state){
+		if(state==0){
+			goods.setState(1);
+		}else if(state==1){
+		goods.setState(0);
+		}
 		goodsRepository.save(goods);
 	}
 }

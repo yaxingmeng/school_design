@@ -7,8 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="getAll.do">查询所有商品信息</a>
-<a href="getProvides.do">供应商</a>
-<a href="getSales.do">销售商</a>
+<form action="addSale.do">
+名字：<input type="text" name="sname">
+<input type="submit" value="添加">
+</form>
 </body>
 </html>

@@ -7,8 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="getAll.do">查询所有商品信息</a>
-<a href="getProvides.do">供应商</a>
-<a href="getSales.do">销售商</a>
+<form action="updateProvide.do">
+<input type="text" name="pid" value="${provide.id}" readonly="readonly">
+<input type="text" name="pname" value="${provide.name }">
+<input type="submit" value="提交">
+</form>
 </body>
 </html>
