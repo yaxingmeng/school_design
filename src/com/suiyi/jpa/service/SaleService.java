@@ -25,16 +25,23 @@ public class SaleService {
 	public void addSale(String name) {
 		Sale s = new Sale();
 		s.setName(name);
+		s.setState(1);
 		saleRepository.save(s);
 	}
 
-	public void updateSale(Sale s) {
-		
+	public void updateSale(Integer id,String name) {
+		Sale s=saleRepository.findById(id);
+		s.setName(name);
 		saleRepository.save(s);
 	}
 
-	public void deleteSale(Integer id) {
+	public void deleteSale(Integer id,Integer state) {
 		Sale s = saleRepository.findById(id);
-		saleRepository.delete(s);
+		if(state==0){
+			s.setState(0);
+		}else if(state==1){
+			s.setState(1);
+		}
+		saleRepository.save(s);
 	}
 }

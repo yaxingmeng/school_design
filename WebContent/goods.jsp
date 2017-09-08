@@ -29,10 +29,10 @@
 <td><a href="goodsInStock.do?id=${goods.id }">入库记录</a></td>
 <td><a href="goodsOutStock.do?id=${goods.id }">出库记录</a></td>
 <c:if test="${goods.state==0 }">
-<td bgcolor="red">不可用<a href="changeState.do?id=${goods.id}&state=${goods.state}">改变状态</a> </td>
+<td bgcolor="red">不可用<a href="changeState.do?id=${goods.id}&state=1">改变状态</a> </td>
 </c:if>
 <c:if test="${goods.state==1}">
-<td>可用<a href="changeState.do?id=${goods.id}&state=${goods.state}" >改变状态</a></td>
+<td>可用<a href="changeState.do?id=${goods.id}&state=0" >改变状态</a></td>
 </c:if>
 </tr>
 </c:forEach>
@@ -40,16 +40,16 @@
 <a href="addGoods.jsp">增加商品</a>
 </form>
 <form action="timeInStock.do">
-查看某段时间内的入库信息:<br>
+查看某段时间内的出/入库信息:<br>
 起：<input type="text" name="start">
 止：<input type="text" name="end">
 <input type="submit" value="查询">
 </form>
-<form action="timeOutStock.do">
+<!-- <form action="timeOutStock.do">
 查看某段时间内的出库信息:<br>
 起：<input type="text" name="start">
 止：<input type="text" name="end">
 <input type="submit" value="查询">
-</form>
+</form> -->
 </body>
 </html>

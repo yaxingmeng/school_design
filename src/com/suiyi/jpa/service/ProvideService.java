@@ -20,6 +20,7 @@ public class ProvideService {
 	public void addProvide(String name) {
 		Provide p = new Provide();
 		p.setName(name);
+		p.setState(1);
 		provideRepository.save(p);
 	}
 	
@@ -27,14 +28,20 @@ public class ProvideService {
 		return provideRepository.findById(id);
 	}
 	
-	public void updateProvide(Provide p){
-		
+	public void updateProvide(Integer id,String name){
+		Provide p=provideRepository.findById(id);
+		p.setName(name);
 		provideRepository.save(p);
 	}
 	
-	public void deleteProvide(Integer id){
+	public void deleteProvide(Integer id,Integer state){
 		Provide p=provideRepository.findById(id);
-		provideRepository.delete(p);
+		if(state==0){
+			p.setState(0);
+		}else if(state==1){
+			p.setState(1);
+		}
+		provideRepository.save(p);
 	}
 	
 }

@@ -26,19 +26,21 @@ public class GoodsService {
 	public Goods addGoods(String name){
 		Goods goods=new Goods();
 		goods.setName(name);
+		goods.setState(0);
 		return goodsRepository.save(goods);
 	}
 /**
  * 获取所需修改的商品信息
  */
 	public Goods updateQuery(Integer id){
-		return goodsRepository.findById(id);
+		return goodsRepository.findOne(id);
+				//findById(id);
 	}
 	/**
 	 * 修改商品信息
 	 */
 	public void updateGoods(Integer id,String name){
-		Goods goods=new Goods();
+		Goods goods=goodsRepository.findOne(id);
 		goods.setId(id);
 		goods.setName(name);
 		goodsRepository.save(goods);
@@ -46,16 +48,16 @@ public class GoodsService {
 	
 	public Goods findById(Integer id)
 	{
-		return goodsRepository.findById(id);
+		return goodsRepository.findOne(id);
 	}
 	/**
 	 * 修改商品状态
 	 */
 	public void changeState(Goods goods,Integer state){
 		if(state==0){
-			goods.setState(1);
+			goods.setState(0);
 		}else if(state==1){
-		goods.setState(0);
+		goods.setState(1);
 		}
 		goodsRepository.save(goods);
 	}

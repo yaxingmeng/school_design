@@ -1,13 +1,10 @@
 package com.suiyi.jpa.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,9 +33,13 @@ public class GoodsController {
 	}
 	/**
 	 * 增加商品
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/addGoods.do")
-	public ModelAndView addGoods(String name){
+	public ModelAndView addGoods(String name) throws Exception{
+		if(name.equals("hehe")){
+			throw new Exception();
+		}
 		Goods goods=goodService.addGoods(name);
 		Stock stock=new Stock();
 		stock.setGoods(goods);

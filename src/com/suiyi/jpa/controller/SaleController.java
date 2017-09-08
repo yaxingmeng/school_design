@@ -62,9 +62,7 @@ public class SaleController {
 	
 	@RequestMapping(value="/updateSale.do")
 	public ModelAndView updateSale(Integer id,String name){
-		Sale sale=saleService.findById(id);
-		sale.setName(name);
-		saleService.updateSale(sale);
+		saleService.updateSale(id,name);
 		return new ModelAndView("forward:getSales.do",null);
 	}
 	
@@ -72,8 +70,8 @@ public class SaleController {
 	 * 删除销售商
 	 */
 	@RequestMapping(value="/deleteSale.do")
-	public ModelAndView deleteSale(Integer sid){
-		saleService.deleteSale(sid);
+	public ModelAndView deleteSale(Integer sid,Integer state){
+		saleService.deleteSale(sid,state);
 		return new ModelAndView("forward:getSales.do",null);
 	}
 }

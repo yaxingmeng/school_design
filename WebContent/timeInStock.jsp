@@ -24,5 +24,21 @@
 </tr>
 </c:forEach>
 </table>
+<table>
+<tr>
+<th>商品</th>
+<th>供应商</th>
+<th>出库数量</th>
+<th>出库时间</th>
+</tr>
+<c:forEach var="outstock" items="${outstocks}">
+<tr>
+<td><c:out value="${outstock.goods.name }"></c:out></td>
+<td><c:out value="${outstock.sale.name }"></c:out></td>
+<td><c:out value="${outstock.amount }"></c:out></td>
+<td><c:out value="${outstock.outtime }"></c:out></td>
+</tr>
+</c:forEach>
+</table>
 </body>
 </html>

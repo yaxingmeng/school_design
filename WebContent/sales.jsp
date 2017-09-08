@@ -11,22 +11,36 @@
 <form action="getAll.do">
 <table>
 <tr>
-<th>销售商id</th>
+<th >销售商id</th>
 <th>销售商姓名</th>
 <th>操作</th>
 <th>入库记录</th>
 </tr>
 <c:forEach var="sale" items="${sales }">
-<tr>
-<td><c:out value="${sale.id }"></c:out></td>
+<c:if test="${sale.state==0}">
+<tr bgcolor="gray">
+<td bgcolor="gray"><c:out value="${sale.id }"></c:out></td>
 <td><c:out value="${sale.name }"></c:out></td>
 <td><a href="getUpdateSale.do?sid=${sale.id }&sname=${sale.name}">修改</a>/
-<a href="deleteSale.do?sid=${sale.id }">删除</a>
+<a href="deleteSale.do?sid=${sale.id }&state=1">变</a>
 </td>
 <td>
 <a href="querySaleStock.do?sid=${sale.id }">入库记录</a>
 </td>
 </tr>
+</c:if>
+<c:if test="${sale.state ==1}">
+<tr>
+<td ><c:out value="${sale.id }"></c:out></td>
+<td><c:out value="${sale.name }"></c:out></td>
+<td><a href="getUpdateSale.do?sid=${sale.id }&sname=${sale.name}">修改</a>/
+<a href="deleteSale.do?sid=${sale.id }&state=0">删除</a>
+</td>
+<td>
+<a href="querySaleStock.do?sid=${sale.id }">入库记录</a>
+</td>
+</tr>
+</c:if>
 </c:forEach>
 </table>
 <input type="submit" value="查看商品信息">

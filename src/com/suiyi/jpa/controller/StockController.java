@@ -1,14 +1,16 @@
 package com.suiyi.jpa.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,7 +18,6 @@ import com.suiyi.jpa.bean.Goods;
 import com.suiyi.jpa.bean.InStock;
 import com.suiyi.jpa.bean.OutStock;
 import com.suiyi.jpa.bean.Provide;
-import com.suiyi.jpa.bean.Sale;
 import com.suiyi.jpa.bean.Stock;
 import com.suiyi.jpa.service.GoodsService;
 import com.suiyi.jpa.service.InService;
@@ -62,7 +63,6 @@ public class StockController {
 	 * @param amount
 	 * @return
 	 */
-	@Transactional
 	@RequestMapping(value = "/addStock.do")
 	public ModelAndView addStock(Integer provideId, Integer goodsId, Integer amount) {
 		Goods goods = goodsService.findById(goodsId);
@@ -70,14 +70,7 @@ public class StockController {
 		if (goods == null || provide == null) {
 			return new ModelAndView("error", "error", "商品或供应商不存在");
 		}
-		InStock in = new InStock();
-		in.setProvide(provide);
-		in.setGoods(goods);
-		in.setAmount(amount);
-		Date date = new Date();
-		in.setIntime(date);
-		inservice.addIn(in);
-		stockService.addStockAmount(goodsId, amount);
+		stockService.addStockAmount(provideId,goodsId,amount);
 		return new ModelAndView("forward:getAll.do", null);
 
 	}
@@ -85,7 +78,6 @@ public class StockController {
 	/**
 	 * 销售商品减少库存
 	 */
-	@Transactional
 	@RequestMapping(value = "/outStock.do")
 	public ModelAndView outStock(Integer saleId, Integer goodsId, Integer amount) {
 		Stock s = stockService.getStockById(goodsId);
@@ -93,16 +85,7 @@ public class StockController {
 		if (amount > a) {
 			return new ModelAndView("error", "error", "超出库存啦！！！");
 		}
-		Goods goods = goodsService.findById(goodsId);
-		Sale sale = saleservice.findById(saleId);
-		OutStock out = new OutStock();
-		out.setSale(sale);
-		out.setGoods(goods);
-		out.setAmount(amount);
-		Date date = new Date();
-		out.setOuttime(date);
-		outService.addOut(out);
-		stockService.subStockAmount(goodsId, amount);
+		stockService.subStockAmount(saleId,goodsId, amount);
 		return new ModelAndView("forward:getAll.do", null);
 	}
 
@@ -110,9 +93,10 @@ public class StockController {
 	 * 查询供应商的入库记录
 	 */
 	@RequestMapping(value = "/queryProvideStock.do")
-	public ModelAndView queryProvideStock(Integer pid) {
+	public String queryProvideStock(Model model,Integer pid) {
 		List<InStock> instocks = inservice.findProvideStock(pid);
-		return new ModelAndView("provideStock", "instocks", instocks);
+		model.addAttribute("instocks", instocks);
+		return "provideStock";
 	}
 
 	/*
@@ -150,17 +134,20 @@ public class StockController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/timeInStock.do")
-	public ModelAndView timeInStock(String start, String end) throws Exception {
+	public String timeInStock(Model model,String start, String end) throws Exception {
 		Date start2 = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(start);
 		Date end2 = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(end);
-		List<InStock> instocks = inservice.findByIntimeBetween(start2, end2);
-		return new ModelAndView("timeInStock", "instocks", instocks);
+		Page<InStock> instocks = inservice.findByIntimeBetween(start2, end2);
+		Page<OutStock> outStocks=outService.findByOuttimeBetween(start2, end2);
+		model.addAttribute("instocks",instocks.getContent());
+		model.addAttribute("outstocks",outStocks.getContent());
+		return "timeInStock";
 	}
 	/**
 	 * 查询某段时间内的出库信息
 	 * 
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping(value="/timeOutStock.do")
 	public ModelAndView timeOutStock(String start, String end) throws Exception {
 		Date start2 = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(start);
@@ -168,4 +155,5 @@ public class StockController {
 		List<OutStock> outstocks = outService.findByOuttimeBetween(start2, end2);
 		return new ModelAndView("timeOutStock", "outstocks", outstocks);
 	}
+	*/
 }

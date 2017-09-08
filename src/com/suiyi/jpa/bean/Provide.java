@@ -11,12 +11,15 @@ import javax.persistence.Table;
 @Table(name = "provide")
 public class Provide {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer id;
-	
+
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "state")
+	private Integer state;
 
 	public Integer getId() {
 		return id;
@@ -33,6 +36,13 @@ public class Provide {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
 
 }

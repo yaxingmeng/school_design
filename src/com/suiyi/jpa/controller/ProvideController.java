@@ -61,9 +61,7 @@ public class ProvideController {
 	
 	@RequestMapping(value="/updateProvide.do")
 	public ModelAndView updateProvide(Integer pid,String pname){
-		Provide p=provideService.findById(pid);
-		p.setName(pname);
-		provideService.updateProvide(p);
+		provideService.updateProvide(pid,pname);
 		return new ModelAndView("forward:getProvides.do",null);
 	}
 	
@@ -71,8 +69,8 @@ public class ProvideController {
 	 * 删除供应商
 	 */
 	@RequestMapping(value="/deleteProvide.do")
-	public ModelAndView deleteProvide(Integer pid){
-		provideService.deleteProvide(pid);
+	public ModelAndView deleteProvide(Integer pid,Integer state){
+		provideService.deleteProvide(pid,state);
 		return new ModelAndView("forward:getProvides.do",null);
 	}
 	

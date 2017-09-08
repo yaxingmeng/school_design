@@ -7,7 +7,4 @@ import com.suiyi.jpa.bean.Goods;
 
 public interface GoodsRepository extends CrudRepository<Goods, Integer> {
 
-	Goods findById(Integer id);
-
-	
 }
