@@ -61,4 +61,14 @@ public class GoodsService {
 		}
 		goodsRepository.save(goods);
 	}
+	
+	/**
+	 * 根据商品名字寻找商品
+	 */
+	public Goods findByName(String name){
+		return goodsRepository.findByName(name);
+	}
+	
+	
+	
 }

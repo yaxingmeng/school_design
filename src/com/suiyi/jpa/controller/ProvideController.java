@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.suiyi.jpa.bean.ExsistsException;
 import com.suiyi.jpa.bean.Provide;
 import com.suiyi.jpa.service.ProvideService;
 
@@ -19,7 +20,11 @@ public class ProvideController {
 	@Autowired
 	private ProvideService provideService;
 	@RequestMapping(value="/addProvide.do")
-	public ModelAndView addProvide(String pname){
+	public ModelAndView addProvide(String pname) throws ExsistsException{
+		Provide provide=provideService.findByName(pname);
+		if(provide !=null){
+			throw new ExsistsException("此供应商已存在");
+		}
 		provideService.addProvide(pname);
 		return new ModelAndView("forward:getProvides.do",null);
 	}

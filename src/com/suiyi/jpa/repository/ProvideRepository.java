@@ -15,4 +15,8 @@ public interface ProvideRepository extends JpaRepository<Provide, Integer> {
 	 * 根据id获取供应商
 	 */
 	Provide findById(Integer id);
+	/**
+	 * 根据name获取供应商
+	 */
+	Provide findByName(String name);
 }

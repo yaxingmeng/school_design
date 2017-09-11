@@ -11,20 +11,31 @@
 <table>
 <tr>
 <th>商品</th>
-<th>供应商</th>
-<th>入库数量</th>
-<th>入库时间</th>
+<th>供应商/销售商</th>
+<th>入/出库数量</th>
+<th>入/出库时间</th>
 </tr>
-<c:forEach var="instock" items="${instocks}">
+<c:forEach var="stock" items="${stocks}">
+<c:if test="${stock.state==0 }">
 <tr>
-<td><c:out value="${instock.goods.name }"></c:out></td>
-<td><c:out value="${instock.provide.name }"></c:out></td>
-<td><c:out value="${instock.amount }"></c:out></td>
-<td><c:out value="${instock.intime }"></c:out></td>
+<td><c:out value="${stock.goods.name}"></c:out></td>
+<td>供应商：<c:out value="${stock.name }"></c:out></td>
+<td><c:out value="${stock.amount }"></c:out></td>
+<td><c:out value="${stock.time }"></c:out></td>
 </tr>
+</c:if>
+<c:if test="${stock.state==1 }">
+<tr>
+<td><c:out value="${stock.goods.name}"></c:out></td>
+<td>销售商:<c:out value="${stock.name }"></c:out></td>
+<td><c:out value="${stock.amount }"></c:out></td>
+<td><c:out value="${stock.time }"></c:out></td>
+</tr>
+</c:if>
 </c:forEach>
+
 </table>
-<table>
+<%-- <table>
 <tr>
 <th>商品</th>
 <th>供应商</th>
@@ -39,6 +50,6 @@
 <td><c:out value="${outstock.outtime }"></c:out></td>
 </tr>
 </c:forEach>
-</table>
+</table> --%>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.suiyi.jpa.bean.ExsistsException;
 import com.suiyi.jpa.bean.Goods;
 import com.suiyi.jpa.bean.Stock;
 import com.suiyi.jpa.service.GoodsService;
@@ -37,8 +38,10 @@ public class GoodsController {
 	 */
 	@RequestMapping(value="/addGoods.do")
 	public ModelAndView addGoods(String name) throws Exception{
-		if(name.equals("hehe")){
-			throw new Exception();
+		Goods good=goodService.findByName(name);
+		if(good!=null){
+			String message="已经存在此消息，请重新填写";
+			throw new ExsistsException(message);
 		}
 		Goods goods=goodService.addGoods(name);
 		Stock stock=new Stock();

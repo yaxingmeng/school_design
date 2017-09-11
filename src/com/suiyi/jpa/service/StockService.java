@@ -1,6 +1,7 @@
 package com.suiyi.jpa.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -13,7 +14,8 @@ import com.suiyi.jpa.bean.OutStock;
 import com.suiyi.jpa.bean.Provide;
 import com.suiyi.jpa.bean.Sale;
 import com.suiyi.jpa.bean.Stock;
-import com.suiyi.jpa.repository.GoodsRepository;
+import com.suiyi.jpa.bean.Stocks;
+import com.suiyi.jpa.repository.StacksRepository;
 import com.suiyi.jpa.repository.StockRepository;
 
 @Service
@@ -32,6 +34,8 @@ public class StockService {
 	private OutService outService;
 	@Autowired
 	private SaleService saleService;
+	@Autowired
+	private StacksRepository stocksRepository;
 	/**
 	 * 根据商品编号获取库存
 	 * @param goods
@@ -85,5 +89,8 @@ public class StockService {
 		stockRepository.save(stock);
 	}
 	
+	public List<Stocks> findAllStocks(Date start1,Date end1,Date start2,Date end2){
+		return stocksRepository.findAllStocks(start1, end1,start2,end2);
+	}
 	
 }

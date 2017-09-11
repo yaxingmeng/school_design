@@ -5,21 +5,22 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.suiyi.jpa.bean.ExsistsException;
 import com.suiyi.jpa.bean.Goods;
+import com.suiyi.jpa.bean.InOut;
 import com.suiyi.jpa.bean.InStock;
 import com.suiyi.jpa.bean.OutStock;
 import com.suiyi.jpa.bean.Provide;
 import com.suiyi.jpa.bean.Stock;
 import com.suiyi.jpa.service.GoodsService;
+import com.suiyi.jpa.service.InOutService;
 import com.suiyi.jpa.service.InService;
 import com.suiyi.jpa.service.OutService;
 import com.suiyi.jpa.service.ProvideService;
@@ -41,7 +42,8 @@ public class StockController {
 	private SaleService saleservice;
 	@Autowired
 	private OutService outService;
-
+	@Autowired
+	private InOutService inoutService;
 	/**
 	 * 产看每个产品的库存
 	 * 
@@ -77,16 +79,18 @@ public class StockController {
 
 	/**
 	 * 销售商品减少库存
+	 * @throws ExsistsException 
 	 */
 	@RequestMapping(value = "/outStock.do")
-	public ModelAndView outStock(Integer saleId, Integer goodsId, Integer amount) {
+	@ResponseBody
+	public String  outStock(Integer saleId, Integer goodsId, Integer amount) throws ExsistsException {
 		Stock s = stockService.getStockById(goodsId);
 		int a = s.getAmount();
 		if (amount > a) {
-			return new ModelAndView("error", "error", "超出库存啦！！！");
+			throw new ExsistsException("超出库存啦");
 		}
 		stockService.subStockAmount(saleId,goodsId, amount);
-		return new ModelAndView("forward:getAll.do", null);
+		return "出库成功";
 	}
 
 	/**
@@ -132,7 +136,7 @@ public class StockController {
 	 * 查询某段时间内的入库信息
 	 * 
 	 * @throws Exception
-	 */
+	 
 	@RequestMapping(value = "/timeInStock.do")
 	public String timeInStock(Model model,String start, String end) throws Exception {
 		Date start2 = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(start);
@@ -142,7 +146,7 @@ public class StockController {
 		model.addAttribute("instocks",instocks.getContent());
 		model.addAttribute("outstocks",outStocks.getContent());
 		return "timeInStock";
-	}
+	}*/
 	/**
 	 * 查询某段时间内的出库信息
 	 * 
@@ -156,4 +160,14 @@ public class StockController {
 		return new ModelAndView("timeOutStock", "outstocks", outstocks);
 	}
 	*/
+	
+	@RequestMapping(value = "/timeInStock.do")
+	public String timeInStock(Model model,@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")Date start, @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")Date end) throws Exception {
+		//Date start2 = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(start);
+		//Date end2 = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(end);
+		List<InOut> stocks=inoutService.findAll(start, end);
+		model.addAttribute("stocks",stocks);
+		return "timeInStock";
+		
+	}
 }

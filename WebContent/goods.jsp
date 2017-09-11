@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="js/jquery.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
@@ -21,7 +22,7 @@
 </tr>
 
 <c:forEach var="goods" items="${goods}">
-<tr>
+<tr c="goods">
 <td><c:out value="${goods.id}"></c:out></td>
 <td><c:out value="${goods.name}"></c:out></td>
 <td><a href="updateQuery.do?id=${goods.id }">修改商品名字</a>/\
@@ -29,10 +30,10 @@
 <td><a href="goodsInStock.do?id=${goods.id }">入库记录</a></td>
 <td><a href="goodsOutStock.do?id=${goods.id }">出库记录</a></td>
 <c:if test="${goods.state==0 }">
-<td bgcolor="red">不可用<a href="changeState.do?id=${goods.id}&state=1">改变状态</a> </td>
+<td t="test" v="${ goods.state}" bgcolor="red">不可用<a href="changeState.do?id=${goods.id}&state=1">改变状态</a> </td>
 </c:if>
 <c:if test="${goods.state==1}">
-<td>可用<a href="changeState.do?id=${goods.id}&state=0" >改变状态</a></td>
+<td t="test" v="${ goods.state}">可用<a href="changeState.do?id=${goods.id}&state=0" >改变状态</a></td>
 </c:if>
 </tr>
 </c:forEach>
@@ -45,11 +46,16 @@
 止：<input type="text" name="end">
 <input type="submit" value="查询">
 </form>
-<!-- <form action="timeOutStock.do">
-查看某段时间内的出库信息:<br>
-起：<input type="text" name="start">
-止：<input type="text" name="end">
-<input type="submit" value="查询">
-</form> -->
+<script type="text/javascript">
+$("tr[c=goods]").click(function(){
+	var state=$(this).find('td[t=test]').attr('v');
+	if(state==0){
+		alert("此商品不可用");
+		return false;
+	}else if(state==1){
+		return true;
+	}
+});
+</script>
 </body>
 </html>

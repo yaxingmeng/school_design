@@ -43,5 +43,7 @@ public class ProvideService {
 		}
 		provideRepository.save(p);
 	}
-	
+	public Provide findByName(String name){
+	 return provideRepository.findByName(name);
+	}
 }
