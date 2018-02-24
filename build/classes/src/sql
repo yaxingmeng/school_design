@@ -1,0 +1,55 @@
+create table goods(
+ id  integer(20) not NULL COMMENT '商品id',
+name varchar(20) NULL  COMMENT '商品名字',
+ state int(20) NULL COMMENT'商品状态，看是否可用',
+ primary key(id)
+)
+
+create table inoutStock(
+ id Integer (20) not null AUTO_INCREMENT COMMENT'入库/出库记录id，主键',
+goods_id Integer(20) null comment‘商品’,
+name varchar(20) null comment‘供应商/销售商的名字’,
+amount varchar(20) null comment'出/入库的数量',
+time  datetime  null comment'出/入库的时间',
+state Integer(20) null comment'0表示出库，1表示入库',
+primary key(id)
+)
+
+create table instock(
+id Integer(20) not null  AUTO_INCREMENT COMMENT'入库记录',
+provide_id Integer(20) null comment'供应商的id',
+goods_id  Integer(20) null comment'商品的id',
+amount Integer(20) null  comment'入库的数量',
+intime datetime null comment'入库的时间',
+primary key(id)
+)
+
+create table outstock(
+id Integer(20) not null AUTO_INCREMENT COMMENT'出库记录',
+provide_id Integer(20) null comment'销售商的id',
+goods_id  Integer(20) null comment'商品的id',
+amount Integer(20) null comment'出库的数量',
+intime datetime  null comment'出库的时间',
+primary key(id)
+)
+
+create table sale(
+id Integer(20) not null AUTO_INCREMENT COMMENT'销售商id',
+name VARCHAR(20) null COMMENT'销售商的名字',
+state Integer(20) null comment'销售商是否可用：0不可用，1可用',
+primary key(id)
+)
+
+create table provide(
+id Integer(20) not null  AUTO_INCREMENT COMMENT'供应商id',
+name VARCHAR(20) null COMMENT'供应商的名字',
+state Integer(20) null comment'供应商是否可用：0不可用，1可用',
+primary key(id)
+)
+
+create table stock(
+id Integer(20) not null AUTO_INCREMENT COMMENT'库存信息id',
+goods_id Integer (20) null comment'商品的id',
+amount Integer(20)null comment'商品的数量',
+primary key(id)
+)

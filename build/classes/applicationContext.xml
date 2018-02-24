@@ -12,7 +12,7 @@
 	<context:component-scan base-package="com.suiyi.jpa" />
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/company" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/design" />
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 	</bean>
