@@ -45,17 +45,17 @@ public class EnumName {
     
     public enum AdminRight {
 
-        ORDER_MANAGE("0","普通管理员"),
+        ORDER_MANAGE(0,"普通管理员"),
 
-        Goods_manage("1","超级管理员"),
+        Goods_manage(1,"超级管理员"),
         
-        ALL_MANAGE("2","全部");
+        ALL_MANAGE(2,"全部");
 
-        private String value;
+        private Integer value;
 
         private String caption;
 
-        public String getValue() {
+        public Integer getValue() {
             return value;
         }
 
@@ -63,12 +63,12 @@ public class EnumName {
             return caption;
         }
 
-        AdminRight(String value, String caption) {
+        AdminRight(Integer value, String caption) {
             this.value = value;
             this.caption = caption;
         }
 
-        public static AdminRight getOf(String v) {
+        public static AdminRight getOf(Integer v) {
             if (v == null) {
                 return null;
             }
@@ -80,7 +80,7 @@ public class EnumName {
             return null;
         }
 
-        public static String getCaptionByValue(String v) {
+        public static String getCaptionByValue(Integer v) {
         	AdminRight es = getOf(v);
             return es == null ? "" : es.getCaption();
         }

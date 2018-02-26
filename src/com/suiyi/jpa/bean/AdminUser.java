@@ -28,8 +28,8 @@ public class AdminUser extends BasicBean {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "right")
-    private String right;
+    @Column(name = "rights")
+    private Integer rights;
 
     @Column(name = "type")
     private Integer type;
@@ -66,15 +66,16 @@ public class AdminUser extends BasicBean {
         this.password = password;
     }
 
-    public String getRight() {
-        return right;
-    }
 
-    public void setRight(String right) {
-        this.right = right;
-    }
+    public Integer getRights() {
+		return rights;
+	}
 
-    public Integer getType() {
+	public void setRights(Integer rights) {
+		this.rights = rights;
+	}
+
+	public Integer getType() {
         return type;
     }
 
@@ -84,5 +85,15 @@ public class AdminUser extends BasicBean {
 
     public String getAdminType() {
         return EnumName.AdminType.getCaptionByValue(type);
+    }
+    
+    public String getRightName(){
+    	if(type==1){
+    		return "人员管理，商品管理，订单管理";
+    	}
+    	if(rights==2){
+    		return "商品管理，订单管理";
+    	}
+    	return EnumName.AdminRight.getCaptionByValue(rights);
     }
 }
