@@ -45,9 +45,9 @@ public class EnumName {
     
     public enum AdminRight {
 
-        ORDER_MANAGE(0,"普通管理员"),
+        ORDER_MANAGE(0,"订单管理"),
 
-        Goods_manage(1,"超级管理员"),
+        Goods_manage(1,"商品管理"),
         
         ALL_MANAGE(2,"全部");
 

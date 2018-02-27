@@ -6,12 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-</head>
-<link rel="stylesheet" type="text/css" href="css/login.css" />
+<link rel="stylesheet" type="text/css" href="css/manage.css" />
 </head>
 <body>
+<div id="background">
 	<div id="con">
-		<p>${admin.name}， 欢迎你</p>
+		<c:if test="${admin.name==null }"><a href="index.jsp">请先登录</a></c:if>
+<c:if test="${admin.name!=null }">${admin.name},欢迎你
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="index.jsp">首页</a>
 		<ul id="tags">
 			<c:if test="${admin.type==1 }">
 			<script type="text/javascript">
@@ -20,7 +22,7 @@
 					}
 				</script>
 				<li class="selectTag0"><a href="javascript:void(0)"
-					onclick="selectTag('tagContent3','selectTag3')">人员管理</a></li>
+					onclick="selectTag('tagContent0','selectTag0')">人员管理</a></li>
 			</c:if>
 			<c:if test="${admin.rights==2 }">
 			<script type="text/javascript">
@@ -51,16 +53,17 @@
 				</script>
 				</li>
 			</c:if>
+			
 		</ul>
 
 		<div id="tagContent">
-	<div id="tagContent3" class="tagContent">
-	<a href="adminList.do?pagesize=10&pagenumber=1">管理员列表</a><br/>
-	<a href="javascript:void(0)" onclick="selectTag('tagContent0','selectTag0')">添加管理员</a>
+	<div id="tagContent0" class="tagContent">
+	<br/><a href="adminList.do?pagesize=10&pagenumber=1&adminName=${admin.name }">管理员列表</a><br/><br/><br/>
+	<a href="javascript:void(0)" onclick="selectTag('tagContent3','selectTag3')">添加管理员</a><br/><br/><br/>
 	</div>
 			<form action="addAdmin.do">
-				<div id="tagContent0" class="tagContent">
-					人员管理：<br /> <input type="hidden" name="operator"
+				<div id="tagContent3" class="tagContent">
+					人员管理：<br /> <br/><input type="hidden" name="operator"
 						value="${admin.name }"> 账号:<input type="text" name="no"><br />
 					<br /> 姓名:<input type="text" name="name"><br /> <br /> 密
 					码:<input type="text" name="password"><br /> <br /> 权限 ：<select
@@ -68,36 +71,45 @@
 						<option value="0">订单管理</option>
 						<option value="1">商品管理</option>
 						<option value="2">全部</option>
-					</select><br /> <input type="submit" value="提交">
+					</select><br/><br /> <input type="submit" value="提交">
 				</div>
 			</form>
 			<form>
 				<div id="tagContent1" class="tagContent">
-					订单管理：<br> 用户名:<input type="text" name="name"><br /> <br />
-					密 码:<input type="text" name="password"><br /> <input
+					订单管理：<br/><br> 用户名:<input type="text" name="name"><br /> <br />
+					密&emsp; 码:<input type="text" name="password"><br /><br/> <input
 						type="submit" value="提交">
 				</div>
 			</form>
 			<form action="check.do">
 				<div id="tagContent2" class="tagContent">
-					商品管理：<br> 用户名/账号:<input type="text" name="name"><br />
-					<br /> 密 码:<input type="text" name="password"><br /> <input
+					商品管理：<br><br/> 用户名/账号:<input type="text" name="name"><br />
+					<br /> &emsp;密&emsp; 码:&emsp;<input type="text" name="password"><br /> <br/><input
 						type="submit" value="提交">
 				</div>
 			</form>
 		</div>
+		</c:if>
+	</div>
 	</div>
 	<script type="text/javascript">
 		function selectTag(showContent, selfObj) {
-			/* var oUl = document.getElementById("tags");        
+			 var oUl = document.getElementById("tags");        
 			var aLi = oUl.getElementsByTagName("li");
+			var length=aLi.length;
 			var i = 0;
-			for(i =0; aLi.length; i++){
+			if(selfObj==="selectTag3"){
+					aLi[0].style.background = "#c0c0c0";
+			}else{
+			
+			for(i =0; i<length; i++){
 			       if(aLi[i].className == selfObj){
-			              aLi[i].style.background = "#FF9900";
+			              aLi[i].style.background = "#c0c0c0";
+			       }else{
+			    	   aLi[i].style.background = "#ffffff";
 			       }
 			} 
-			alert(333); */
+			}
 			var tag = document.getElementById(showContent);
 			for (i = 0; j = document.getElementById("tagContent" + i); i++) {
 				if (j.id === tag.id) {

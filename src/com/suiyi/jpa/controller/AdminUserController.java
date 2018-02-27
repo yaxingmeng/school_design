@@ -31,41 +31,65 @@ public class AdminUserController {
 	}
 
 	@RequestMapping(value = "/addAdmin.do")
-	public String addAdmin(String operator,String no, String name, String password,Integer right) {
-		System.out.println(right+"..."+operator);
-		AdminUser adminUser = new AdminUser();
+	public String addAdmin(String operator, String no, String name, String password, Integer right) {
+		System.out.println(right + "..." + operator);
+		AdminUser adminUser = adminUserService.findByAdminNo(no);
+		if (adminUser == null) {
+			adminUser = new AdminUser();
+			adminUser.setCreatedBy(operator);
+			adminUser.setCreateTime(new Date());
+		}
 		adminUser.setAdminNo(no);
 		adminUser.setName(name);
 		adminUser.setPassword(password);
 		adminUser.setRights(right);
 		adminUser.setType(EnumName.AdminType.NORMAL_ADMIN.getValue());
-		adminUser.setCreatedBy(operator);
-		adminUser.setCreateTime(new Date());
 		adminUser.setUpdateTime(new Date());
 		adminUser.setUpdatedBy(operator);
 		adminUserService.add(adminUser);
-		return "succes";
+		return "forward:adminList.do?pagesize=10&pagenumber=1&adminName="+operator;
 	}
-	
+
 	@RequestMapping(value = "/adminList.do")
-	public ModelAndView adminList(Integer pagesize,Integer pagenumber,HttpServletRequest request){
-		int totalcount=adminUserService.list().size();
+	public ModelAndView adminList(Integer pagesize, Integer pagenumber, String adminName, HttpServletRequest request) {
+		int totalcount = adminUserService.list().size();
 		int pagecount = 0;
 		int m = totalcount % pagesize;
-        if (m > 0) {
-            pagecount = totalcount / pagesize + 1;
-        } else {
-            pagecount = totalcount / pagesize;
-        }
-        if(pagenumber>pagecount||pagenumber<0){
-        	throw new ExceptionMessage("页数有错");
-        }
-		Page<AdminUser> adminuser=adminUserService.adminList(pagenumber-1, pagesize);
-		List<AdminUser> admin=adminuser.getContent();
-		List<Integer> page=new LinkedList<>();
+		if (m > 0) {
+			pagecount = totalcount / pagesize + 1;
+		} else {
+			pagecount = totalcount / pagesize;
+		}
+		if (pagenumber > pagecount || pagenumber < 0) {
+			throw new ExceptionMessage("页数有错");
+		}
+		Page<AdminUser> adminuser = adminUserService.adminList(pagenumber - 1, pagesize);
+		List<AdminUser> admin = adminuser.getContent();
+		List<Integer> page = new LinkedList<>();
 		page.add(pagenumber);
 		page.add(pagecount);
 		request.setAttribute("page", page);
+		request.setAttribute("adminName", adminName);
 		return new ModelAndView("adminList", "admin", admin);
+	}
+
+	@RequestMapping(value = "/adminDetail.do")
+	public ModelAndView detailAdmin(String adminName, Integer type,String oprator, HttpServletRequest request) {
+		AdminUser adminUser = adminUserService.findByAdminNo(adminName);
+		request.setAttribute("adminName", oprator);
+		request.setAttribute("type", type);
+		return new ModelAndView("adminDetail", "admin", adminUser);
+	}
+	
+	@RequestMapping(value = "/backMain.do")
+	public ModelAndView backMain(String adminName){
+		AdminUser admin=adminUserService.findByAdminNo(adminName);
+		return new ModelAndView("admin_login", "admin", admin);
+	}
+	
+	@RequestMapping(value = "/deleteAdmin.do")
+	public String delete(String operator,String adminName){
+		adminUserService.deleteAdmin(adminName);
+		return "forward:adminList.do?pagesize=10&pagenumber=1&adminName="+operator;
 	}
 }

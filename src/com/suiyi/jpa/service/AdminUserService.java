@@ -42,5 +42,14 @@ public class AdminUserService {
 	public List<AdminUser> list(){
 		return adminUserRepository.findAll();
 	}
+	
+	public AdminUser findByAdminNo(String name){
+		return adminUserRepository.findByAdminNo(name);
+	}
+	
+	public void deleteAdmin(String adminName){
+		AdminUser admin=findByAdminNo(adminName);
+		adminUserRepository.delete(admin);
+	}
 
 }

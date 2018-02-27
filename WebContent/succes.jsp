@@ -5,13 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title></title>
-<link rel="stylesheet" type="text/css" href="css/page.css" />
+<link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body> 
-<div id="back">
-<div id="con">
+<div id="title">
 success!!!
-</div>
 </div>
 </body>
 </html>

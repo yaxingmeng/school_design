@@ -52,16 +52,18 @@
 	</div>
 	<script type="text/javascript">
 		function selectTag(showContent, selfObj) {
-			/* var oUl = document.getElementById("tags");        
-			var aLi = oUl.getElementsByTagName("li");
-			var i = 0;
-			for(i =0; aLi.length; i++){
-			       if(aLi[i].className == selfObj){
-			              aLi[i].style.background = "#FF9900";
-			       }
-			} 
-			alert(333); */
-
+			 var oUl = document.getElementById("tags");        
+				var aLi = oUl.getElementsByTagName("li");
+				var length=aLi.length;
+				var i = 0;
+				for(i =0; i<length; i++){
+				       if(aLi[i].className == selfObj){
+				              aLi[i].style.background = "#c0c0c0";
+				       }else{
+				    	   aLi[i].style.background = "#ffffff";
+				       }
+				} 
+				
 			var tag = document.getElementById(showContent);
 			for (i = 0; j = document.getElementById("tagContent" + i); i++) {
 				if (j.id === tag.id) {
