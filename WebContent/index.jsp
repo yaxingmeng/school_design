@@ -1,15 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<c:choose>
+<c:when test="${regist_error!=null }">
 <script type="text/javascript">
+	window.onload = function() {
+		selectTag('tagContent0', 'selectTag0');
+	}
+</script>
+</c:when>
+<c:otherwise>
+	<script type="text/javascript">
 	window.onload = function() {
 		selectTag('tagContent1', 'selectTag1');
 	}
 </script>
+</c:otherwise>
+</c:choose>
 <link rel="stylesheet" type="text/css" href="css/login.css" />
 </head>
 <body>
@@ -25,17 +37,20 @@
 		</ul>
 
 		<div id="tagContent">
-			<form>
+		
+			<form action="user_regist.do">
 				<div id="tagContent0" class="tagContent">
-					注册：<br /> <br />用户名:<input type="text" name="name"><br />
+					注册：<br />&emsp;&emsp;&emsp;&emsp;&emsp;<p id="error">${regist_error }</p>
+					用户名:<input type="text" name="nickname">&emsp;<br />
 					<br /> 密&emsp; 码:<input type="text" name="password"><br />
 					<br /> 手机号码：<input type="text" name="telephone"><br /> <br /><input
 						type="submit" value="提交">
 				</div>
 			</form>
-			<form>
+			<form action="user_login.do">
 				<div id="tagContent1" class="tagContent">
-					登陆：<br /><br> 用户名:<input type="text" name="name"><br />
+					登陆：<br />&emsp;&emsp;&emsp;<p id="error">${login_error }</p>
+					 用户名:<input type="text" name="nickname">&emsp;<br />
 					<br /> 密&emsp; 码:<input type="text" name="password"><br /><br /> <input
 						type="submit" value="提交">
 				</div>
@@ -50,6 +65,7 @@
 		</div>
 	</div>
 	</div>
+	
 	<script type="text/javascript">
 		function selectTag(showContent, selfObj) {
 			 var oUl = document.getElementById("tags");        
@@ -66,6 +82,7 @@
 				
 			var tag = document.getElementById(showContent);
 			for (i = 0; j = document.getElementById("tagContent" + i); i++) {
+				alert(j.id);
 				if (j.id === tag.id) {
 					j.style.display = "block";
 				} else {

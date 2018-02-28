@@ -1,55 +1,39 @@
-create table goods(
- id  integer(20) not NULL COMMENT '商品id',
-name varchar(20) NULL  COMMENT '商品名字',
- state int(20) NULL COMMENT'商品状态，看是否可用',
- primary key(id)
-)
+CREATE TABLE `admin_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_no` varchar(20) NOT NULL COMMENT '管理员账号',
+  `name` varchar(20) NOT NULL COMMENT '管理员姓名',
+  `password` varchar(20) NOT NULL COMMENT '密码',
+  `rights` int(2) DEFAULT NULL COMMENT '管理员权限',
+  `type` int(2) NOT NULL COMMENT '管理员类型：0：普通管理员，1：超级管理员',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` varchar(45) NOT NULL COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updated_by` varchar(45) NOT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-create table inoutStock(
- id Integer (20) not null AUTO_INCREMENT COMMENT'入库/出库记录id，主键',
-goods_id Integer(20) null comment‘商品’,
-name varchar(20) null comment‘供应商/销售商的名字’,
-amount varchar(20) null comment'出/入库的数量',
-time  datetime  null comment'出/入库的时间',
-state Integer(20) null comment'0表示出库，1表示入库',
-primary key(id)
-)
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL COMMENT '用户姓名',
+  `nickname` varchar(20) NOT NULL COMMENT '昵称',
+  `phone` varchar(20) NOT NULL COMMENT '手机号码',
+  `password` varchar(50) NOT NULL COMMENT '密码',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` varchar(45) NOT NULL COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updated_by` varchar(45) NOT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table instock(
-id Integer(20) not null  AUTO_INCREMENT COMMENT'入库记录',
-provide_id Integer(20) null comment'供应商的id',
-goods_id  Integer(20) null comment'商品的id',
-amount Integer(20) null  comment'入库的数量',
-intime datetime null comment'入库的时间',
-primary key(id)
-)
+CREATE TABLE `user_location` (
+  `id` int(7) NOT NULL AUTO_INCREMENT,
+  `location_user_id` int(7) NOT NULL,
+  `location` varchar(100) NOT NULL COMMENT '地址',
+  `phone` varchar(20) NOT NULL COMMENT '手机号码',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` varchar(45) NOT NULL COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `updated_by` varchar(45) NOT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table outstock(
-id Integer(20) not null AUTO_INCREMENT COMMENT'出库记录',
-provide_id Integer(20) null comment'销售商的id',
-goods_id  Integer(20) null comment'商品的id',
-amount Integer(20) null comment'出库的数量',
-intime datetime  null comment'出库的时间',
-primary key(id)
-)
-
-create table sale(
-id Integer(20) not null AUTO_INCREMENT COMMENT'销售商id',
-name VARCHAR(20) null COMMENT'销售商的名字',
-state Integer(20) null comment'销售商是否可用：0不可用，1可用',
-primary key(id)
-)
-
-create table provide(
-id Integer(20) not null  AUTO_INCREMENT COMMENT'供应商id',
-name VARCHAR(20) null COMMENT'供应商的名字',
-state Integer(20) null comment'供应商是否可用：0不可用，1可用',
-primary key(id)
-)
-
-create table stock(
-id Integer(20) not null AUTO_INCREMENT COMMENT'库存信息id',
-goods_id Integer (20) null comment'商品的id',
-amount Integer(20)null comment'商品的数量',
-primary key(id)
-)
