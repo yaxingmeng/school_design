@@ -11,14 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.suiyi.jpa.bean.User;
+import com.suiyi.jpa.bean.UserLocation;
+import com.suiyi.jpa.service.UserLocationService;
 import com.suiyi.jpa.service.UserService;
 
 @Controller
 @RequestMapping
-public class UserController {
+public class UserController  {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserLocationService userLocationService;
 	
 	@RequestMapping(value = "/user_login.do")
 	public String login(String nickname,String password,HttpServletRequest request){
@@ -58,10 +63,68 @@ public class UserController {
 			return new ModelAndView("user_login","user",user);
 	}
 	
+	@RequestMapping(value = "/user_update.do")
+	public ModelAndView update(String nickname,Integer id,String name,String password,String telephone,HttpServletRequest request){
+		User u=userService.findById(id);
+		User user=userService.findByNickname(nickname);
+		User user1=userService.findByPhone(telephone);
+		if(u.getId()!=user.getId()){
+			request.setAttribute("type",0);
+			return new ModelAndView("user_login","regist_error","用户名已存在");
+		}
+		if(u.getId()!=user1.getId()){
+			request.setAttribute("type",0);
+			return new ModelAndView("index","regist_error","手机号码已注册");
+		}
+			u.setNickname(nickname);
+			u.setPhone(telephone);
+			u.setPassword(password);
+			u.setName(name);
+			userService.fillUpdate(u, nickname);
+			user=userService.save(user);
+			request.setAttribute("type",1);
+			return new ModelAndView("user_login","user",user);
+	}
+	
 	@RequestMapping(value = "/user_detail.do")
 	public ModelAndView detail(String nickname,HttpServletRequest request){
 		User user=userService.findByNickname(nickname);
 		request.setAttribute("type",0);
+		return new ModelAndView("user_login","user",user);
+	}
+	
+	@RequestMapping(value = "/add_location.do")
+	public ModelAndView addLocation(String nickname,String location,String connector,String phone,HttpServletRequest request){
+		User user=userService.findByNickname(nickname);
+		UserLocation userLocation=new UserLocation();
+		userLocation.setPhone(phone);
+		userLocation.setConnector(connector);
+		userLocation.setLocation(location);
+		userLocation.setUserId(user.getId());
+		userLocation=userLocationService.add(userLocation,nickname);
+		request.setAttribute("type", 1);
+		return new ModelAndView("user_login","user",user);
+	}
+	
+	@RequestMapping(value = "/update_location.do")
+	public ModelAndView updateLocation(Integer id,String nickname,String location,String connector,String phone,HttpServletRequest request){
+		User user=userService.findByNickname(nickname);
+		UserLocation userLocation=userLocationService.findById(id);
+		userLocation.setLocation(location);
+		userLocation.setConnector(connector);
+		userLocation.setPhone(phone);
+		userLocation=userLocationService.fillUpdate(userLocation, nickname);
+		userLocationService.save(userLocation);
+		request.setAttribute("type", 1);
+		request.setAttribute("success","修改成功");
+		return new ModelAndView("user_login","user",user);
+	}
+	
+	@RequestMapping(value = "/delete_location.do")
+	public ModelAndView deleteLocation(Integer id,String nickname,HttpServletRequest request){
+		User user=userService.findByNickname(nickname);
+		userLocationService.deleteLocation(id);
+		request.setAttribute("type", 1);
 		return new ModelAndView("user_login","user",user);
 	}
 

@@ -21,16 +21,10 @@ public class AdminUserService {
 
 	public AdminUser login(String name, String password) {
 		AdminUser adminUser = adminUserRepository.findByAdminNo(name);
-		if(adminUser==null){
-			throw new ExceptionMessage("用户名不存在");
-		}
-		if(!StringUtils.equals(password, adminUser.getPassword())){
-			throw new ExceptionMessage("用户名密码不正确");
-		}
 		return adminUser;
 	}
 	
-	public AdminUser add(AdminUser adminUser){
+	public AdminUser save(AdminUser adminUser){
 		return adminUserRepository.save(adminUser);
 	}
 	

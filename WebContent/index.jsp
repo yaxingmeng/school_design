@@ -14,6 +14,13 @@
 	}
 </script>
 </c:when>
+<c:when test="${admin_error!=null }">
+<script type="text/javascript">
+	window.onload = function() {
+		selectTag('tagContent2', 'selectTag2');
+	}
+</script>
+</c:when>
 <c:otherwise>
 	<script type="text/javascript">
 	window.onload = function() {
@@ -57,7 +64,7 @@
 			</form>
 			<form action="check.do">
 				<div id="tagContent2" class="tagContent">
-					管理员：<br /><br> 用户名/账号:<input type="text" name="name"><br />
+					管理员：<span style="color:red">${admin_error }</span><br /><br> 用户名/账号:<input type="text" name="name"><br />
 					<br /> &emsp;密&emsp; 码:&emsp;<input type="text" name="password"><br /><br /> <input
 						type="submit" value="提交">
 				</div>
@@ -82,7 +89,6 @@
 				
 			var tag = document.getElementById(showContent);
 			for (i = 0; j = document.getElementById("tagContent" + i); i++) {
-				alert(j.id);
 				if (j.id === tag.id) {
 					j.style.display = "block";
 				} else {

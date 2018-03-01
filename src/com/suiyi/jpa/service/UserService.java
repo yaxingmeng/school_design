@@ -7,7 +7,7 @@ import com.suiyi.jpa.bean.User;
 import com.suiyi.jpa.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService extends BasicService<User, Integer>{
 
 	@Autowired
 	private UserRepository userRepository;
@@ -28,5 +28,12 @@ public class UserService {
 	public User findByPhone(String phone) {
 		return userRepository.findByPhone(phone);
 	}
+	
+	public User findById(Integer id){
+		return userRepository.findOne(id);
+	}
 
+	public User save(User user){
+		return userRepository.save(user);
+	}
 }

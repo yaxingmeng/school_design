@@ -39,53 +39,76 @@
 					我的订单
 				</div>
 			</form>
-			<form action="">
+			
 				<div id="tagContent2" class="tagContent">
 				<div id="word">
-				<c:if test="${type==1 }">
-					我的信息:<br><a href="user_detail.do?nickname=${user.nickname }">编辑</a><br>
+				<c:if test="${type==1 }"><!-- type=1,查看信息 -->
+					我的信息:<br>
+					<br>
 					用户名:<input type="text" name="nickname" value="${user.nickname }" readonly="readonly">&emsp;<br />
 					<br /> 密&emsp; 码:<input type="text" name="password" value="${user.password }" readonly="readonly"><br />
 					<br /> 手机号码：<input type="text" name="telephone" value="${user.phone }" readonly="readonly"><br /> <br />
-					<c:choose>
+					<input type="button" value="编辑基本信息" onclick="window.location='user_detail.do?nickname=${user.nickname }'">
+					<input type="button" value="新增收货信息" onclick="show('location')"><br><br>
+						<c:choose>
 					<c:when test="${fn:length(user.locations)==0 }">
-					添加地址
+					<form action="add_location.do">
+					你还没有收货地址，添加一下吧！<br>
+					<input type="hidden" name="nickname" value="${user.nickname }">
+					地址：<textarea rows="1" cols="20" name="location" ></textarea>
+					联系人：<input type="text" name="connector" >
+					联系电话：<input type="text" name="phone">
+					<input type="submit" value="提交">
+					</form>
 					</c:when>
 					<c:otherwise>
+					收货信息:&emsp;&emsp;&emsp;&emsp;<span style="color:red">${success}</span><br>
+					<div id="location" class="tagContent">
+					<form action="add_location.do">
+					<input type="hidden" name="nickname" value="${user.nickname }">
+					地址：<textarea rows="1" cols="20" name="location" ></textarea>
+					联系人：<input type="text" name="connector" >
+					联系电话：<input type="text" name="phone">
+					<input type="submit" value="提交">
+					</form>
+					</div>
 					<c:forEach var="location" items="${user.locations }">
-					地址：<textarea rows="1" cols="20" name="location" readonly="readonly">${location.location}</textarea><br><br>
-					联系电话：<input type="text" value="${location.phone }">
+					<form action="update_location.do">
+					<input type="hidden" name="id" value="${location.id }">
+					<input type="hidden" name="nickname" value="${user.nickname }">
+					地址：<textarea rows="1" cols="20" name="location"  >${location.location}</textarea><
+					联系人：<input type="text" name="connector" value="${location.connector }" ><
+					联系电话：<input type="text" value="${location.phone }" name="phone">
+					<input type="submit" value="提交修改">
+					<a href="delete_location.do?id=${location.id }&nickname=${user.nickname}" onclick="del()">删除</a><br>
+					</form>
 					</c:forEach>
 					</c:otherwise>
 					</c:choose>
 					</c:if>
-					<c:if test="${type==0 }">
-					我的信息:<br><br>
-					用户名:<input type="text" name="nickname" value="${user.nickname }" >&emsp;<br />
-					<br /> 密&emsp; 码:<input type="text" name="password" value="${user.password }" ><br />
-					<br /> 手机号码：<input type="text" name="telephone" value="${user.phone }" ><br /> <br />
-					<c:choose>
-					<c:when test="${fn:length(user.locations)==0 }">
-					添加地址
-					</c:when>
-					<c:otherwise>
-					<c:forEach var="location" items="${user.locations }">
-					地址：<textarea rows="1" cols="20" name="location" >${location.location}</textarea><br><br>
-					联系电话：<input type="text" value="${location.phone }">
-					</c:forEach>
-					</c:otherwise>
-					</c:choose>
+					<c:if test="${type==0 }"><!-- type==0,修改信息页面 -->
+					<form action="user_update.do">
+					我的信息:<br>${regist_error }<br>
+					<input type="hidden" name="id" value="${user.id }">
+					用户名:<input type="text" name="nickname" value="${user.nickname }" >&emsp;<br /><br />
+					姓&emsp;名:<input type="text" name="name" value="${user.name }" >(非必填)&emsp;<br /><br />
+					 密&emsp; 码:<input type="text" name="password" value="${user.password }" ><br /><br /> 
+					手机号码：<input type="text" name="telephone" value="${user.phone }" ><br /> <br />
+					<input type="submit" value="提交">
+					</form>
 					</c:if>
 					</div>
 				</div>
-			</form>
+			
 		</div>
 	</div>
 	<c:choose>
 	<c:when test="${type<=1 }">
+	<script type="text/javascript">
 	window.onload = function() {
 		selectTag('tagContent2', 'selectTag2');
 	}
+	  </script>
 	</c:when>
 	<c:otherwise>
 	<script type="text/javascript">
@@ -97,12 +120,29 @@
 	</c:choose>
 	
 	<script type="text/javascript">
+	function del() {
+		var msg = "删除后不可修复？\n\n请确认！";
+		if (confirm(msg)==true){
+		return true;
+		}else{
+		return false;
+		}
+		}
+	function show(showContent){
+		var tag = document.getElementById(showContent);
+		tag.style.display="block";
+	}
+	
+	
 		function selectTag(showContent, selfObj) {
-			 var oUl = document.getElementById("tags");        
+			var a=document.getElementById("location");
+			if(a!=null){
+				a.style.display = "none";
+			}
+			 var oUl = document.getElementById("tags"); 
 				var aLi = oUl.getElementsByTagName("li");
 				var length=aLi.length;
 				var i = 0;
-				
 				for(i =0; i<length; i++){
 				       if(aLi[i].className == selfObj){
 				              aLi[i].style.background = "#c0c0c0";

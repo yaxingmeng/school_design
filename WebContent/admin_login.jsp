@@ -53,16 +53,17 @@
 				</script>
 				</li>
 			</c:if>
-			
+			<li class="selectTag3"><a href="javascript:void(0)"
+					onclick="selectTag('tagContent3','selectTag3')">修改密码</a></li>
 		</ul>
 
 		<div id="tagContent">
 	<div id="tagContent0" class="tagContent">
 	<br/><a href="adminList.do?pagesize=10&pagenumber=1&adminName=${admin.name }">管理员列表</a><br/><br/><br/>
-	<a href="javascript:void(0)" onclick="selectTag('tagContent3','selectTag3')">添加管理员</a><br/><br/><br/>
+	<a href="javascript:void(0)" onclick="selectTag('tagContent4','selectTag4')">添加管理员</a><br/><br/><br/>
 	</div>
 			<form action="addAdmin.do">
-				<div id="tagContent3" class="tagContent">
+				<div id="tagContent4" class="tagContent">
 					人员管理：<br /> <br/><input type="hidden" name="operator"
 						value="${admin.name }"> 账号:<input type="text" name="no"><br />
 					<br /> 姓名:<input type="text" name="name"><br /> <br /> 密
@@ -88,20 +89,40 @@
 						type="submit" value="提交">
 				</div>
 			</form>
+			<form action="change_password.do">
+				<div id="tagContent3" class="tagContent">
+					修改密码：&emsp;&emsp;<span style="color:red">${change }</span><br><br/> 
+					<input type="hidden" name="operator" value="${admin.name}">
+					用户名:<input type="text" name="name" readonly="readonly" value="${admin.name }"><br />
+					<br /> &emsp;密&emsp; 码:&emsp;<input type="text" name="password" value="${admin.password }"><br /> <br/>
+					<input type="submit" value="提交">
+				</div>
+			</form>
 		</div>
 		</c:if>
 	</div>
 	</div>
+	<c:if test="${change!=null }">
+	<script type="text/javascript">
+	window.onload = function() {
+		selectTag('tagContent3', 'selectTag3');
+	}
+	  </script>
+	</c:if>
 	<script type="text/javascript">
 		function selectTag(showContent, selfObj) {
 			 var oUl = document.getElementById("tags");        
 			var aLi = oUl.getElementsByTagName("li");
 			var length=aLi.length;
 			var i = 0;
-			if(selfObj==="selectTag3"){
+			if(selfObj==="selectTag4"){
 					aLi[0].style.background = "#c0c0c0";
+					document.getElementById("tagContent4").style.display = "block";
+					for(i=0;i<length;i++){
+						document.getElementById("tagContent"+i).style.display = "none";
+					}
 			}else{
-			
+				document.getElementById("tagContent4").style.display = "none";
 			for(i =0; i<length; i++){
 			       if(aLi[i].className == selfObj){
 			              aLi[i].style.background = "#c0c0c0";

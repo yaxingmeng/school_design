@@ -25,6 +25,9 @@ public class UserLocation extends BasicBean {
 	@Column(name="phone")
 	private String phone;
 	
+	@Column(name="connector")
+	private String connector;
+	
 
 	public Integer getId() {
 		return id;
@@ -56,6 +59,14 @@ public class UserLocation extends BasicBean {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getConnector() {
+		return connector;
+	}
+
+	public void setConnector(String connector) {
+		this.connector = connector;
 	}
 	
 	

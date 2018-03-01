@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -25,8 +26,14 @@ public class AdminUserController {
 	private AdminUserService adminUserService;
 
 	@RequestMapping(value = "/check.do")
-	public ModelAndView adminLogin(String name, String password) {
+	public ModelAndView adminLogin(String name, String password,HttpServletRequest request) {
 		AdminUser adminuser = adminUserService.login(name, password);
+		if(adminuser==null){
+			return new ModelAndView("index", "admin_error", "用户名不存在");
+		}
+		if(!StringUtils.equals(password, adminuser.getPassword())){
+			return new ModelAndView("index", "admin_error", "用户名密码不正确");
+		}
 		return new ModelAndView("admin_login", "admin", adminuser);
 	}
 
@@ -46,7 +53,7 @@ public class AdminUserController {
 		adminUser.setType(EnumName.AdminType.NORMAL_ADMIN.getValue());
 		adminUser.setUpdateTime(new Date());
 		adminUser.setUpdatedBy(operator);
-		adminUserService.add(adminUser);
+		adminUserService.save(adminUser);
 		return "forward:adminList.do?pagesize=10&pagenumber=1&adminName="+operator;
 	}
 
@@ -92,4 +99,17 @@ public class AdminUserController {
 		adminUserService.deleteAdmin(adminName);
 		return "forward:adminList.do?pagesize=10&pagenumber=1&adminName="+operator;
 	}
+	
+	@RequestMapping(value = "/change_password.do")
+	public ModelAndView changePassword(String operator,String name,String password,HttpServletRequest request){
+		AdminUser admin=adminUserService.findByAdminNo(name);
+		admin.setPassword(password);
+		admin.setUpdatedBy(operator);
+		admin.setUpdateTime(new Date());
+		adminUserService.save(admin);
+		request.setAttribute("change", "修改成功");
+		return new ModelAndView("admin_login", "admin", admin);
+	}
+	
+	
 }
