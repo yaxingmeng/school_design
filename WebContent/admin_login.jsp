@@ -82,19 +82,19 @@
 						type="submit" value="提交">
 				</div>
 			</form>
-			<form action="check.do">
+			<form action="">
 				<div id="tagContent2" class="tagContent">
-					商品管理：<br><br/> 用户名/账号:<input type="text" name="name"><br />
-					<br /> &emsp;密&emsp; 码:&emsp;<input type="text" name="password"><br /> <br/><input
-						type="submit" value="提交">
+					商品管理：<br><br/> 
+					<a href="goodset_list.do?pagesize=10&pagenumber=1&adminName=${admin.name }">商品配置</a><br><br>
+					<a href="">商品信息</a><br><br>
 				</div>
 			</form>
 			<form action="change_password.do">
 				<div id="tagContent3" class="tagContent">
 					修改密码：&emsp;&emsp;<span style="color:red">${change }</span><br><br/> 
 					<input type="hidden" name="operator" value="${admin.name}">
-					用户名:<input type="text" name="name" readonly="readonly" value="${admin.name }"><br />
-					<br /> &emsp;密&emsp; 码:&emsp;<input type="text" name="password" value="${admin.password }"><br /> <br/>
+					用户名:&emsp;<input type="text" name="name" readonly="readonly" value="${admin.name }"><br />
+					<br />密&emsp; 码:&emsp;<input type="text" name="password" value="${admin.password }"><br /> <br/>
 					<input type="submit" value="提交">
 				</div>
 			</form>

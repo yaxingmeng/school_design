@@ -6,6 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.suiyi.jpa.Utils.ExceptionMessage;
 import com.suiyi.jpa.bean.BasicBean;
 import com.suiyi.jpa.repository.BasicRepository;
 

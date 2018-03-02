@@ -8,6 +8,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @MappedSuperclass
@@ -23,10 +25,12 @@ public abstract class BasicBean implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="update_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date updateTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="create_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected Date createTime;
 

@@ -33,6 +33,7 @@ background-size:100%;
 #tags li.selectTag3 { background-position: left top; position:relative; height:25px; margin-bottom:-2px}  
 #tags li.selectTag a { background-position: right top; color:#000; height:25px; line-height:25px;}  
 #tagContent { padding:1px; 
+margin-top:20px;
 background-color:#dbe3de;
 background:-moz-linear-gradient(top,#dbe3de,#f6f6f8);
 background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#dbe3de), to(#f6f6f8));
