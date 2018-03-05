@@ -20,7 +20,17 @@
                      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">  
 	<mvc:annotation-driven>
 		<mvc:message-converters>
-			<ref bean="stringHttpMessageConverter" />
+		 <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
+                        <property name="dateFormat"><bean class="java.text.SimpleDateFormat">
+                            <constructor-arg type="java.lang.String" value="yyyyMMddHHmmss"/>
+                            </bean>
+                        </property>
+                    </bean>
+                </property>
+            </bean>
+			 <ref bean="stringHttpMessageConverter" />
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 	<!-- 扫描web包, 将标注spring注解的类自动转化为bean, 同时完成bean的注入 -->

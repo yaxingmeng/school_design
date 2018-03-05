@@ -67,7 +67,8 @@
 					人员管理：<br /> <br/><input type="hidden" name="operator"
 						value="${admin.name }"> 账号:<input type="text" name="no"><br />
 					<br /> 姓名:<input type="text" name="name"><br /> <br /> 密
-					码:<input type="text" name="password"><br /> <br /> 权限 ：<select
+					码:<input type="text" name="password"><br /> <br />
+					 权限 ：<select
 						id="right" name="right">
 						<option value="0">订单管理</option>
 						<option value="1">商品管理</option>
@@ -86,7 +87,7 @@
 				<div id="tagContent2" class="tagContent">
 					商品管理：<br><br/> 
 					<a href="goodset_list.do?pagesize=10&pagenumber=1&adminName=${admin.name }">商品配置</a><br><br>
-					<a href="">商品信息</a><br><br>
+					<a href="good_list.do?pagesize=10&pagenumber=1&adminName=${admin.name }&type=0">商品信息</a><br><br>
 				</div>
 			</form>
 			<form action="change_password.do">

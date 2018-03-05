@@ -37,6 +37,9 @@ public class Goods extends BasicBean{
 	
 	@Column(name = "state")
 	private Integer state;
+	
+	@Column(name="image")
+	private String image;
 
 	@OneToOne
 	@JoinColumn(name = "type",insertable = false, updatable = false)
@@ -110,5 +113,18 @@ public class Goods extends BasicBean{
 	public String getStateName(){
 		return EnumName.GoodState.getCaptionByValue(state);
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	public String getTypeName(){
+		return goodType.getName();
+	}
+	
 
 }
