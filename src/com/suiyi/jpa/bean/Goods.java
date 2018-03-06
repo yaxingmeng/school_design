@@ -8,41 +8,42 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.suiyi.jpa.Utils.EnumName;
 
 @Entity
 @Table(name = "goods")
-public class Goods extends BasicBean{
-	
+public class Goods extends BasicBean {
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "good_no")
 	private String goodNo;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "type")
 	private Integer type;
-	
+
 	@Column(name = "price")
 	private Double price;
-	
+
 	@Column(name = "amount")
 	private Integer amount;
-	
+
 	@Column(name = "state")
 	private Integer state;
 	
-	@Column(name="image")
-	private String image;
+	@Column(name="unit")
+	private String unit;
 
 	@OneToOne
-	@JoinColumn(name = "type",insertable = false, updatable = false)
+	@JoinColumn(name = "type", insertable = false, updatable = false)
 	private GoodType goodType;
 
 	public Integer getId() {
@@ -100,7 +101,6 @@ public class Goods extends BasicBean{
 	public void setState(Integer state) {
 		this.state = state;
 	}
-	
 
 	public GoodType getGoodType() {
 		return goodType;
@@ -109,22 +109,23 @@ public class Goods extends BasicBean{
 	public void setGoodType(GoodType goodType) {
 		this.goodType = goodType;
 	}
-	
-	public String getStateName(){
+
+	public String getStateName() {
 		return EnumName.GoodState.getCaptionByValue(state);
 	}
 
-	public String getImage() {
-		return image;
+	
+	public String getUnit() {
+		return unit;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
-	
-	public String getTypeName(){
+
+	@Transient
+	public String getTypeName() {
 		return goodType.getName();
 	}
-	
 
 }

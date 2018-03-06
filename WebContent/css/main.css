@@ -49,4 +49,16 @@ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b8c4cb), to(#f6f6f8));/
 	 margin-top:1px;
  margin-left:10px;
 }
+ #good{
+ padding-left:270px;
+ padding-top:30px;
+	font-size:18px;
+	height:600px;
+ width:600px; 
+background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);/*ie*/
+background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b8c4cb), to(#f6f6f8));/*火狐*/
+ background: -ms-linear-gradient(top, #b8c4cb,  #f6f6f8);/*谷歌*/
+ margin-top:80px;
+ margin-left:40px;
+}
 </style>

@@ -48,7 +48,6 @@ CREATE TABLE `good_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
 CREATE TABLE `goods` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `good_no` varchar(50) NOT NULL COMMENT '商品编号',
@@ -57,11 +56,13 @@ CREATE TABLE `goods` (
   `price` double(10,2) NOT NULL COMMENT '价格',
   `amount` int(10) NOT NULL COMMENT '库存',
   `state` int(2) NOT NULL COMMENT '状态：0：上架，1：下架',
+  `unit` varchar(10) NOT NULL COMMENT '单位',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `created_by` varchar(45) NOT NULL COMMENT '创建人',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `updated_by` varchar(45) NOT NULL COMMENT '更新人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
 
 

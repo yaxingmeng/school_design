@@ -14,25 +14,40 @@
 <div id="title">
 <ul id="tags">
             <li class="selectTag3"><a href="javascript:void(0)"
-				onclick="selectTag('tagContent3','selectTag3')">商品</a></li>
+				onclick="window.location='good_list_user.do?pagesize=10&pagenumber=1&userName=${userName}'">商品</a></li>
 			<li class="selectTag0"><a href="javascript:void(0)"
 				onclick="selectTag('tagContent0','selectTag0')">购物车</a></li>
 			<li class="selectTag1"><a href="javascript:void(0)"
 				onclick="selectTag('tagContent1','selectTag1')">我的订单</a></li>
 			<li class="selectTag2"><a href="javascript:void(0)"
-				onclick="selectTag('tagContent2','selectTag2')">我的信息</a></li>
+				onclick="window.location='user_info.do?nickname=${userName}'">我的信息</a></li>
 		</ul>
 </div>
 <div id="tagContent">
              <form action="">
 				<div id="tagContent3" class="tagContent">
-					商品
+					商品:
+					<br>&emsp;&emsp;&emsp;&emsp;
+					<input type="hidden" name="pagesize" value="10">
+					<input type="hidden" name="pagenumber" value="1"> 
+					<input type="hidden" name="userName" value="${userName}"> 
+					<input type="text" name="name" value="名称">&emsp;&emsp;
+					<select id="type" name="goodtype" >
+					 <option value="" selected="selected">全部</option>
+                         <c:forEach var="goodType" items="${goodType }">
+                          <option value="${goodType.id }">${goodType.name}</option>
+                          </c:forEach>
+                        </select>
+                        <input type="submit" value="搜索">
+					<div id="good">
+					<jsp:include page="goodsUser.jsp" />
+					</div>
 				</div>
 			</form>
 			<form action="">
 				<div id="tagContent0" class="tagContent">
 					购物车
-				</div>
+				</div>		
 			</form>
 			<form action="">
 				<div id="tagContent1" class="tagContent">
@@ -94,7 +109,7 @@
 					姓&emsp;名:<input type="text" name="name" value="${user.name }" >(非必填)&emsp;<br /><br />
 					 密&emsp; 码:<input type="text" name="password" value="${user.password }" ><br /><br /> 
 					手机号码：<input type="text" name="telephone" value="${user.phone }" ><br /> <br />
-					<input type="submit" value="提交">
+					<input type="submit" value="提交">&emsp;&emsp;&emsp;&emsp;
 					</form>
 					</c:if>
 					</div>
@@ -102,11 +117,18 @@
 			
 		</div>
 	</div>
-	<c:choose>
+   <c:choose>
 	<c:when test="${type<=1 }">
 	<script type="text/javascript">
 	window.onload = function() {
 		selectTag('tagContent2', 'selectTag2');
+	}
+	  </script>
+	</c:when>
+	<c:when test="${type==3 }">
+	<script type="text/javascript">
+	window.onload = function() {
+		selectTag('tagContent3', 'selectTag3');
 	}
 	  </script>
 	</c:when>
@@ -118,7 +140,6 @@
      </script>
 	</c:otherwise>
 	</c:choose>
-	
 	<script type="text/javascript">
 	function del() {
 		var msg = "删除后不可修复？\n\n请确认！";

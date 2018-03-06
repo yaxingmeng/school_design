@@ -36,6 +36,16 @@ public class UserController  {
 			request.setAttribute("login_error","用户名密码不正确");
 			return "redirect:index";		
 		}
+		request.setAttribute("userName", nickname);
+		request.setAttribute("user", user);
+		request.setAttribute("type", 1);
+		return "user_login";
+	}
+	
+	@RequestMapping(value = "/user_info.do")
+	public String userInfo(String nickname,HttpServletRequest request){
+		User user=userService.findByNickname(nickname);
+		request.setAttribute("userName", user.getNickname());
 		request.setAttribute("user", user);
 		request.setAttribute("type", 1);
 		return "user_login";
@@ -83,6 +93,7 @@ public class UserController  {
 			userService.fillUpdate(u, nickname);
 			user=userService.save(user);
 			request.setAttribute("type",1);
+			request.setAttribute("userName", user.getNickname());
 			return new ModelAndView("user_login","user",user);
 	}
 	
@@ -90,6 +101,7 @@ public class UserController  {
 	public ModelAndView detail(String nickname,HttpServletRequest request){
 		User user=userService.findByNickname(nickname);
 		request.setAttribute("type",0);
+		request.setAttribute("userName", nickname);
 		return new ModelAndView("user_login","user",user);
 	}
 	
@@ -103,6 +115,7 @@ public class UserController  {
 		userLocation.setUserId(user.getId());
 		userLocation=userLocationService.add(userLocation,nickname);
 		request.setAttribute("type", 1);
+		request.setAttribute("userName", nickname);
 		return new ModelAndView("user_login","user",user);
 	}
 	
@@ -117,6 +130,7 @@ public class UserController  {
 		userLocationService.save(userLocation);
 		request.setAttribute("type", 1);
 		request.setAttribute("success","修改成功");
+		request.setAttribute("userName", nickname);
 		return new ModelAndView("user_login","user",user);
 	}
 	
@@ -125,6 +139,7 @@ public class UserController  {
 		User user=userService.findByNickname(nickname);
 		userLocationService.deleteLocation(id);
 		request.setAttribute("type", 1);
+		request.setAttribute("userName", nickname);
 		return new ModelAndView("user_login","user",user);
 	}
 

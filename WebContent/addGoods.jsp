@@ -14,12 +14,13 @@
 	<c:if test="${adminName==null }"><a href="index.jsp">请先登录</a></c:if>
 <c:if test="${adminName!=null }">${adminName},欢迎你
 <c:if test="${ type==0}">
-<form action="add_good.do">
+<form action="add_good.do" id="add">
 <br>
 <input type="hidden" name="adminName" value="${adminName }">
-名称：<input type="text" name="name" ><br><br>
+名称：<input type="text" name="name" >&emsp;&emsp;&emsp;<span style="color:red">${exception }</span><br><br>
 商品编号：<input type="text" name="goodNo"><br><br>
 价格：<input type="text" name="price"><br><br>
+单位：<input type="text" name="unit"><br><br>
 库存：<input type="text" name="amount"><br><br>
 类型:<select id="type" name="type" >
 <c:forEach var="goodType" items="${goodType }">
@@ -27,14 +28,35 @@
 </c:forEach>
 <option>
 </select><br><br>
-选择上传图片：<input type="file" id="image" name="image" >
 <input type="submit" value="提交">
 </form>
 </c:if>
+<c:if test="${type==null }">
+<form action="add_good.do" id="add">
+<br>
+<input type="hidden" name="adminName" value="${adminName }">
+<input type="hidden" name="id" value="${good.id }">
+名称：<input type="text" name="name" value="${good.name }" readonly="readonly" >&emsp;&emsp;&emsp;<span style="color:red">${exception }</span><br><br>
+商品编号：<input type="text" name="goodNo" value="${good.goodNo }" readonly="readonly"><br><br>
+价格：<input type="text" name="price" value="${good.price }"><br><br>
+单位：<input type="text" name="price" value="${good.unit }"><br><br>
+库存：<input type="text" name="amount" value="${good.amount }"><br><br>
+类型:<select id="type" name="type" >
+<c:forEach var="goodType" items="${goodType }">
+<c:if test="${good.type==goodType.id }">
+<option value="${goodType.id }" selected="selected">${goodType.name}</option>
 </c:if>
-	
+<option value="${goodType.id }">${goodType.name}</option>
+</c:forEach>
+<option>
+</select><br><br>
+<input type="submit" value="提交">
+</form>
+</c:if>
+	</c:if>
 	</div>
 	</div>
+
 
 </body>
 </html>

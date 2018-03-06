@@ -26,7 +26,7 @@ public class GoodsService extends BasicService<Goods, Integer> {
 		return goodsRepository.findAll();
 	}
 	
-	public List<Goods> findByName(String name){
+	public List<Goods> findByNameContaining(String name){
 		return goodsRepository.findByNameContaining(name);
 	}
 	
@@ -40,6 +40,28 @@ public class GoodsService extends BasicService<Goods, Integer> {
 	
 	public Goods save(Goods goods){
 		return goodsRepository.save(goods);
+	}
+	
+	public List<Goods> findNameOrType(String name,Integer type,Integer pagenumber,Integer pagesize){
+		Integer mount=pagesize*pagenumber;
+		if(name!=null){
+			if(type!=null){
+				return goodsRepository.findByType(type, mount);
+			}
+			return goodsRepository.FindByName(name, mount);
+		}
+		return goodsRepository.findByNameAndType(name, type, mount);
+	}
+	
+	public boolean findByNameOrNO(String name,String no){
+		if(goodsRepository.findByName(name).size()!=0){
+			return false;
+		}else if(goodsRepository.findByGoodNo(no).size()!=0){
+			return false;
+		}else{
+			return true;
+		}
+		
 	}
 	
 }
