@@ -17,6 +17,7 @@
 	 <table border="1" spacing="2">
  <tr>
  <th>商品名称</th>
+ <th>商品编号</th>
 <th>类型</th>
 <th>价格</th>
 <th>单位</th>
@@ -26,6 +27,7 @@
  <c:forEach var="good" items="${goods }">
  <tr>
  <td><c:out value="${good.name }"></c:out></td>
+ <td><c:out value="${good.goodNo }"></c:out></td>
  <td><c:out value="${good.typeName}"></c:out></td>
  <td><c:out value="${good.price }"></c:out></td>
  <td>/<c:out value="${good.unit }"></c:out></td>

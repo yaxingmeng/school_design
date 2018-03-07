@@ -19,7 +19,7 @@ public interface GoodsRepository extends CrudRepository<Goods, Integer> {
 	@Query(value = "select * from goods where type=?1 limit ?2,10", nativeQuery = true)
 	List<Goods> findByType(Integer type,Integer mount);
 	
-	@Query(value = "select * from goods where name like '%?1%' or type=?2 limit ?3,10", nativeQuery = true)
+	@Query(value = "select * from goods where name like %?1% and type=?2 limit ?3,10", nativeQuery = true)
 	List<Goods> findByNameAndType(String name,Integer type,Integer mount);
 	
 	List<Goods> findAll();

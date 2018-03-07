@@ -34,7 +34,7 @@ public class UserController  {
 		}
 		if(!StringUtils.equals(user.getPassword(), password)){
 			request.setAttribute("login_error","用户名密码不正确");
-			return "redirect:index";		
+			return "index";		
 		}
 		request.setAttribute("userName", nickname);
 		request.setAttribute("user", user);
