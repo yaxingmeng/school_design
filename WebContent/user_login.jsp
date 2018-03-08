@@ -24,26 +24,27 @@
 		</ul>
 </div>
 <div id="tagContent">
-             <form action="">
+            
 				<div id="tagContent3" class="tagContent">
 					商品:
 					<br>&emsp;&emsp;&emsp;&emsp;
+					 <form action="good_list_user.do">
 					<input type="hidden" name="pagesize" value="10">
 					<input type="hidden" name="pagenumber" value="1"> 
 					<input type="hidden" name="userName" value="${userName}"> 
-					<input type="text" name="name" value="名称">&emsp;&emsp;
-					<select id="type" name="goodtype" >
+					名称:<input type="text" name="name" >&emsp;&emsp;
+					类型：<select id="type" name="goodtype" >
 					 <option value="" selected="selected">全部</option>
                          <c:forEach var="goodType" items="${goodType }">
                           <option value="${goodType.id }">${goodType.name}</option>
                           </c:forEach>
                         </select>
                         <input type="submit" value="搜索">
+                        </form>
 					<div id="good">
 					<jsp:include page="goodsUser.jsp" />
 					</div>
 				</div>
-			</form>
 			<form action="">
 				<div id="tagContent0" class="tagContent">
 					购物车

@@ -31,8 +31,10 @@
 <input type="hidden" name="goodtype" value="${goodtype}">
 <input type="hidden" name="name" value="${name}">
 <input type="hidden" name="pagenumber" value="${page[0] }">
- <input type="hidden" name="amount" id="amount">
- <input type="submit" value="加入购物车" onclick="loading()">
+ <input type="submit" value="加入购物车" onclick="loading(${good.amount },${good.id})">
+ <input type="hidden" name="amount" id="amount${good.id }">
+  <input type="hidden" name="userName" value="${userName }">
+  <input type="hidden" name="goodId" value="${good.id }">
  </form>
  </td>
  </tr>
@@ -48,11 +50,16 @@
 <a href = "good_list_user.do?pagesize=10&pagenumber=${page[1] }&userName=${userName }&type=0&name=${name}&goodtype=${goodtype}" >尾页</a>
 第${page[0]}页/共${page[1]}页&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
-<script>
-function loading()
+<script type="text/javascript">
+function loading(amount,id)
 {
 var a=window.prompt("数量",1);
-document.getElementById("amount").value=a ; 
+document.getElementById("amount"+id).value=a ; 
+if(a>amount){
+	alert("超出库存，请重新填写数量");
+	return false;
+}
+return true;
 }
 </script>
 </body>
