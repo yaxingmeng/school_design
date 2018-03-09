@@ -16,7 +16,7 @@
             <li class="selectTag3"><a href="javascript:void(0)"
 				onclick="window.location='good_list_user.do?pagesize=10&pagenumber=1&userName=${userName}'">商品</a></li>
 			<li class="selectTag0"><a href="javascript:void(0)"
-				onclick="selectTag('tagContent0','selectTag0')">购物车</a></li>
+				onclick="window.location='goodcar_list.do?pagesize=10&pagenumber=1&userName=${userName}'">购物车</a></li>
 			<li class="selectTag1"><a href="javascript:void(0)"
 				onclick="selectTag('tagContent1','selectTag1')">我的订单</a></li>
 			<li class="selectTag2"><a href="javascript:void(0)"
@@ -45,14 +45,16 @@
 					<jsp:include page="goodsUser.jsp" />
 					</div>
 				</div>
-			<form action="">
+			<form action="deleteAllCar.do">
 				<div id="tagContent0" class="tagContent">
-					购物车
+					购物车:
+					<jsp:include page="goodCar.jsp" />
 				</div>		
 			</form>
 			<form action="">
 				<div id="tagContent1" class="tagContent">
-					我的订单
+					我的订单:
+					
 				</div>
 			</form>
 			
@@ -130,6 +132,13 @@
 	<script type="text/javascript">
 	window.onload = function() {
 		selectTag('tagContent3', 'selectTag3');
+	}
+	  </script>
+	</c:when>
+	<c:when test="${type==2 }">
+	<script type="text/javascript">
+	window.onload = function() {
+		selectTag('tagContent0', 'selectTag0');
 	}
 	  </script>
 	</c:when>

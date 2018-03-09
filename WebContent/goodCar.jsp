@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,24 +11,24 @@
             calc(); //计算方法
             //全选\反选
             $("#selectAll").click(function(){
-                var $obj =$(this).attr("checked");
+                var $obj =$(this).is(":checked");
                 if($obj){
-                    $("input[name='ck1']").attr("checked",true);
+                    $("input[name='ck1']").prop('checked',true);
                 }else{
-                    $("input[name='ck1']").attr("checked",false);
+                    $("input[name='ck1']").prop('checked',false);
                 }
             });
  
             //删除所选
             $("#deleteSelete").click(function(){
-                $("input[name='ck1']:checked").each(function(){
+               /*  $("input[name='ck1']:checked").each(function(){
                     $(this).parent().parent().remove();
-                });
+                }); */
                 calc();
             });
             //单击删除
             $("#mytable .delete").click(function(){
-                $(this).parent().parent().remove();
+               $(this).parent().parent().remove();
                 calc();
             });
             //单机商品数量+
@@ -88,33 +89,51 @@
         position:relative;
     }
     #mytable{
-        width:400px;
+        width:800px;
     }
     #mytable td{
-        width:200px;       
+        width:500px;       
     }
 </style>
 </head>
 <body>
 <div>
     <div id="main">
+   
         <table id="mytable">
             <tr>
                 <td>
                     <input type="checkbox" name="all" id="selectAll" >全选
                 </td>
-                <td>单价</td>
-                <td>购买个数</td>
-                <td>费用</td>
-                <td>删除</td>
+                <th>商品名称</th>
+                <th>商品编号</th>
+                <th>单价</th>
+                <th>购买个数</th>
+                <th>费用</th>
             </tr>
+            <c:forEach var="goodCar" items="${goodCar }">
             <tr>
+                <td><input type="checkbox" name="ck1" id="ck1" value="${goodCar.id }"></td>
+                <td><c:out value="${goodCar.goods.name }"></c:out></td>
+                <td><c:out value="${goodCar.goods.goodNo }"></c:out></td>
+                <td><c:out value="${goodCar.goods.price }"></c:out></td>
+                <td>
+                <c:if test="${goodCar.amount>1 }">
+                    <img src="images/cut.PNG" class="cut"></c:if>
+                    <input type="text" size="4" value="${goodCar.amount }" style="width:20px" name="inputCount"/>
+                    <c:if test="${goodCar.amount<goodCar.goods.amount }"><img src="images/add.PNG" class="add"></c:if></td>
+                <td></td>
+                <td><input type="button" value="删除" class="delete" name="deleteGoods" onclick="window.location='goodcar_delete.do?goodCarId=${goodCar.id }&pagesize=10&pagenumber=${page[0] }&userName=${userName }'"></td>
+                <td><input type="button" value="结算" class="delete" name="pay"></td>
+            </tr>
+            </c:forEach>
+          <!--   <tr>
                 <td><input type="checkbox" name="ck1" id="ck1"></td>
                 <td>123</td>
                 <td>
-                    <img src="img/taobao_minus.jpg" class="cut">
+                    <img src="images/cut.PNG" class="cut">
                     <input type="text" size="4" value="1" style="width:20px" name="inputCount"/>
-                    <img src="img/taobao_adding.jpg" class="add"></td>
+                    <img src="images/add.PNG" class="add"></td>
                 <td></td>
                 <td><input type="button" value="删除" class="delete" name="deleteGoods"></td>
             </tr>
@@ -147,10 +166,19 @@
                     <img src="img/taobao_adding.jpg" class="add"></td>
                 <td></td>
                 <td><input type="button" value="删除" class="delete" name="deleteGoods"></td>
-            </tr>
+            </tr> -->
             <tr><td colspan="5" align="right">总费用：<span id="sum"></span></td></tr>
-            <tr><td colspan="5"><input type="button" value="删除选中的项" id="deleteSelete"> </td></tr>
+            <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete"> </td></tr>
         </table>
+<a href = "goodcar_list.do?pagesize=10&pagenumber=1&userName=${userName}" >首页</a>
+<c:if test="${page[0]>1}">
+<a href = "goodcar_list.do?pagesize=10&pagenumber=${page[0]-1 }&userName=${userName }" >上一页</a>
+</c:if>
+<c:if test="${page[0]<page[1]}">
+<a href = "goodcar_list.do?pagesize=10&pagenumber=${page[0]+1 }&userName=${userName }" >下一页</a>
+</c:if>
+<a href = "goodcar_list.do?pagesize=10&pagenumber=${page[1] }&userName=${userName }" >尾页</a>
+第${page[0]}页/共${page[1]}页&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
     </div>   
 </div>
 </body>

@@ -27,11 +27,14 @@
  <td>/<c:out value="${good.unit }"></c:out></td>
  <td><c:out value="${good.amount }"></c:out></td>
  <td><!-- <a href="javascript:void(0)" onclick="test()">加入购物车</a> -->
-<form action="add_goodcar.do" name="myForm">
+ <%-- <input type="button" value="添加购物车"onclick="show(${good.id})">
+  <div id="content${good.id }">asdf
+ </div> --%>
+<form action="add_goodcar.do" name="myForm" onsubmit="return loading(${good.amount },${good.id})">
 <input type="hidden" name="goodtype" value="${goodtype}">
 <input type="hidden" name="name" value="${name}">
 <input type="hidden" name="pagenumber" value="${page[0] }">
- <input type="submit" value="加入购物车" onclick="loading(${good.amount },${good.id})">
+ <input type="submit" value="加入购物车" >
  <input type="hidden" name="amount" id="amount${good.id }">
   <input type="hidden" name="userName" value="${userName }">
   <input type="hidden" name="goodId" value="${good.id }">
@@ -51,16 +54,35 @@
 第${page[0]}页/共${page[1]}页&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
 <script type="text/javascript">
+/* 
+function show(id){
+	var tag = document.getElementById(content+id);
+	tag.style.display="block";
+	alert(222);
+}
+ */
 function loading(amount,id)
 {
 var a=window.prompt("数量",1);
+a=check(amount,a);
 document.getElementById("amount"+id).value=a ; 
-if(a>amount){
-	alert("超出库存，请重新填写数量");
+if(confirm(a)==true){
+	return turn;
+}else{
 	return false;
 }
-return true;
+
 }
+ 
+ function check(amount,mount){
+	  if(mount>amount){
+		 alert("库存为"+amount+",超出库存，请重新填写数量");
+		  mount=window.prompt("数量",1);
+		 check(amount,mount);
+	 }
+	return mount;
+ }
+ 
 </script>
 </body>
 </html>

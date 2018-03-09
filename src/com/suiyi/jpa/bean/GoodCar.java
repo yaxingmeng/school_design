@@ -24,16 +24,15 @@ public class GoodCar extends BasicBean{
 	@Column(name="user_id")
 	private Integer userId;
 	
-	
 	@Column(name="amount")
 	private Integer amount;
 	
 	@OneToOne
-	@JoinColumn(name = "good", insertable = false, updatable = false)
+	@JoinColumn(name = "good_id", insertable = false, updatable = false)
 	private Goods goods;
 	
 	@OneToOne
-	@JoinColumn(name = "user", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User user;
 
 	public Integer getId() {

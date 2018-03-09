@@ -40,13 +40,25 @@ public class GoodCarController {
 	@RequestMapping(value = "/add_goodcar.do")
 	public ModelAndView addGoodCar(Integer goodId,String userName,Integer amount,
 			Integer pagenumber,String name,Integer goodtype, HttpServletRequest request){
-		GoodCar goodCar=new GoodCar();
-		goodCar.setGoodId(goodId);
+		Goods god=goodsService.findById(goodId);
 		User user=userService.findByNickname(userName);
+		if(god.getAmount()<amount){
+			throw new ExceptionMessage("超出库存");
+		}
+		List<GoodCar> car=goodCarService.findByGoodIdAndUserId(goodId, user.getId());
+		GoodCar goodCar=null;
+		if(car.size()!=0){
+			goodCar=car.get(0);
+			goodCar.setAmount(amount+goodCar.getAmount());
+			goodCarService.fillUpdate(goodCar, userName);
+		}else{
+	    goodCar=new GoodCar();
+		goodCar.setGoodId(goodId);
 		goodCar.setUserId(user.getId());
 		goodCar.setGoodId(goodId);
 		goodCar.setAmount(amount);
 		goodCarService.fillCreate(goodCar, userName);
+		}
 		goodCarService.save(goodCar);
 		int totalcount = goodsService.findAll().size();
 		int pagecount = 0;
@@ -79,5 +91,49 @@ public class GoodCarController {
 		request.setAttribute("goodType", goodTypes);
 		return new ModelAndView("user_login", "goods", goods);
 	}
+	
+	@RequestMapping(value = "/goodcar_list.do")
+	public String goodCarList(Integer pagesize,Integer pagenumber,String userName,HttpServletRequest request){
+		int totalcount = goodCarService.allList().size();
+		int pagecount = 0;
+		int m = totalcount % pagesize;
+		if (m > 0) {
+			pagecount = totalcount / pagesize + 1;
+		} else {
+			pagecount = totalcount / pagesize;
+		}
+		if (pagenumber > pagecount || pagenumber < 0) {
+			throw new ExceptionMessage("页数有错");
+		}
+		Page<GoodCar> goodCars=goodCarService.allPage(pagesize, pagenumber-1);
+		List<Integer> page = new LinkedList<>();
+		page.add(pagenumber);
+		page.add(pagecount);
+		request.setAttribute("userName", userName);
+		request.setAttribute("page", page);
+		request.setAttribute("type", 2);
+		request.setAttribute("goodCar", goodCars.getContent());
+		return "user_login";
+	}
+	
+	@RequestMapping(value = "/goodcar_delete.do")
+	public String deleteGoodCar(Integer goodCarId,Integer pagesize,Integer pagenumber,String userName,HttpServletRequest request){
+		goodCarService.delete(goodCarId);
+		return "forward:goodcar_list.do?pagesize="+pagesize+"&pagenumber="+pagenumber+"&userName="+userName;
+	}
+	
+/*	public String addOrPlusMount(Integer state,Integer){
+		
+	}*/
+	
+	@RequestMapping(value="/deleteAllCar.do")
+	public String deleteAllCar(Integer[] ck1){
+		for(int i=0;i<ck1.length;i++){
+			goodCarService.delete(ck1[i]);
+		}
+		return "user_login";
+		
+	}
+	
 	
 }
