@@ -32,19 +32,19 @@
                 calc();
             });
             //单机商品数量+
-            $("#mytable .add").click(function(){
+           /* $("#mytable .add").click(function(){
                 //获得单前数量
-                var $goodsCount= parseInt($(this).prev().val());
-                $(this).prev().val($goodsCount+1);
+               //var $goodsCount= parseInt($(this).prev().val());
+               //$(this).prev().val($goodsCount+1);
                 calc();
             });
             //单机商品数量-
             $("#mytable .cut").click(function(){
                 //获得单前数量
-                var $goodsCount= parseInt($(this).next().val());
-                $(this).next().val($goodsCount<=1?1:$goodsCount-1);
+                //var $goodsCount= parseInt($(this).next().val());
+               //$(this).next().val($goodsCount<=1?1:$goodsCount-1);
                 calc();
-            });
+            });*/
  
             //计算价格
             function calc(){
@@ -99,7 +99,8 @@
 <body>
 <div>
     <div id="main">
-   
+   <c:if test="${goodCar==null }">购物车里还没有东西，快去添加吧！<br><br></c:if>
+   <c:if test="${goodCar!=null }">
         <table id="mytable">
             <tr>
                 <td>
@@ -119,57 +120,23 @@
                 <td><c:out value="${goodCar.goods.price }"></c:out></td>
                 <td>
                 <c:if test="${goodCar.amount>1 }">
-                    <img src="images/cut.PNG" class="cut"></c:if>
+                   <a href="addorplus_car.do?id=${goodCar.id}&state=0&userName=${userName}&pagenumber=${page[0]}&pagecount=${page[1]}"> <img src="images/cut.PNG" class="cut" ></a></c:if>
                     <input type="text" size="4" value="${goodCar.amount }" style="width:20px" name="inputCount"/>
-                    <c:if test="${goodCar.amount<goodCar.goods.amount }"><img src="images/add.PNG" class="add"></c:if></td>
+                    <c:if test="${goodCar.amount<goodCar.goods.amount }">
+                        <a href="addorplus_car.do?id=${goodCar.id}&state=1&userName=${userName}&pagenumber=${page[0]}&pagecount=${page[1]}"><img src="images/add.PNG" class="add" ></a>
+                    </c:if></td>
                 <td></td>
                 <td><input type="button" value="删除" class="delete" name="deleteGoods" onclick="window.location='goodcar_delete.do?goodCarId=${goodCar.id }&pagesize=10&pagenumber=${page[0] }&userName=${userName }'"></td>
                 <td><input type="button" value="结算" class="delete" name="pay"></td>
             </tr>
             </c:forEach>
-          <!--   <tr>
-                <td><input type="checkbox" name="ck1" id="ck1"></td>
-                <td>123</td>
-                <td>
-                    <img src="images/cut.PNG" class="cut">
-                    <input type="text" size="4" value="1" style="width:20px" name="inputCount"/>
-                    <img src="images/add.PNG" class="add"></td>
-                <td></td>
-                <td><input type="button" value="删除" class="delete" name="deleteGoods"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="ck1" id="ck2"></td>
-                <td>432</td>
-                <td>
-                    <img src="img/taobao_minus.jpg" class="cut">
-                    <input type="text" size="4" value="1" style="width:20px" name="inputCount"/>
-                    <img src="img/taobao_adding.jpg" class="add"></td>
-                <td></td>
-                <td><input type="button" value="删除" class="delete" name="deleteGoods"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="ck1" id="ck3"></td>
-                <td>789</td>
-                <td>
-                    <img src="img/taobao_minus.jpg" class="cut">
-                    <input type="text" size="4" value="1" style="width:20px" name="inputCount"/>
-                    <img src="img/taobao_adding.jpg" class="add"></td>
-                <td></td>
-                <td><input type="button" value="删除" class="delete" name="deleteGoods"></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="ck1" id="ck4"></td>
-                <td>153</td>
-                <td>
-                    <img src="img/taobao_minus.jpg" class="cut">
-                    <input type="text" size="4" value="1" style="width:20px" name="inputCount"/>
-                    <img src="img/taobao_adding.jpg" class="add"></td>
-                <td></td>
-                <td><input type="button" value="删除" class="delete" name="deleteGoods"></td>
-            </tr> -->
             <tr><td colspan="5" align="right">总费用：<span id="sum"></span></td></tr>
             <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete"> </td></tr>
         </table>
+        <input type="hidden" name="pagenumber" value="${page[0]}">
+        <input type="hidden" name="userName" value="${userName }">
+         <input type="hidden" name="pagecount" value="${page[1] }">
+        </c:if>
 <a href = "goodcar_list.do?pagesize=10&pagenumber=1&userName=${userName}" >首页</a>
 <c:if test="${page[0]>1}">
 <a href = "goodcar_list.do?pagesize=10&pagenumber=${page[0]-1 }&userName=${userName }" >上一页</a>
@@ -178,7 +145,7 @@
 <a href = "goodcar_list.do?pagesize=10&pagenumber=${page[0]+1 }&userName=${userName }" >下一页</a>
 </c:if>
 <a href = "goodcar_list.do?pagesize=10&pagenumber=${page[1] }&userName=${userName }" >尾页</a>
-第${page[0]}页/共${page[1]}页&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+第${page[0]}页/共${page[1]}页
     </div>   
 </div>
 </body>

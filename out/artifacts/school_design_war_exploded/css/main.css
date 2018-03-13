@@ -1,0 +1,64 @@
+<style type="text/css">  
+body { font-size:18px; font-family:"宋体"} 
+#back{
+	background-size:100%;
+	padding-top:30px;
+ background:url(../images/background.jpg) no-repeat ;
+}
+#title{
+	font-size:15px; height:120px;
+ width:1000px; 
+ margin-top:1px;
+ margin-left:450px;
+ background:-moz-linear-gradient(top,#808080,#f6f6f8);
+ background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#808080), to(#f6f6f8));
+ background: -ms-linear-gradient(top, #808080,  #f6f6f8); 
+}
+#tags { height:23px; width:1000px; margin-top:30px; padding:0; margin-left:20px;}  
+#tags li {color:black;font-size:20px; float:left; margin-left:15px;margin-right:15px;margin-top:58px; background:#c0c0c0no-repeat left bottom; height:23px; list-style-type:none}  
+#tags li a { text-decoration:none; float:left; background:url(。。/images/fresh.png) no-repeat right bottom; height:23px; padding:0px 10px; line-height:23px; color:#999}  
+#tags li.emptyTag { width:4px; background:black}  
+#tags li.selectTag0 { background-position: left top; position:relative; height:25px; margin-bottom:-2px}  
+#tags li.selectTag1 { background-position: left top; position:relative; height:25px; margin-bottom:-2px}  
+#tags li.selectTag2 { background-position: left top; position:relative; height:25px; margin-bottom:-2px}  
+#tags li.selectTag3 {background-position: left top; position:relative; height:25px; margin-bottom:-2px}
+#tags li.selectTag a { background-position: right top; color:#000; height:25px; line-height:25px;}  
+#tagConten { padding:1px; background-color:#dbe3de; margin-top:60px;margin-left:30px;margin-right:30px}  
+.tagContent { background:url(images/bg.gif) repeat-x;  padding:10px; color:#474747; width:576px; display:none}  
+#tagContent div.selectTag{ display:block}      
+#tagContent { font-size:18px; height:720px;
+ width:1000px; 
+ margin-top:1px;
+ margin-left:450px;
+background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);
+background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b8c4cb), to(#f6f6f8));
+ background: -ms-linear-gradient(top, #b8c4cb,  #f6f6f8); 
+ }  
+ #word{
+	font-size:18px;
+	height:600px;
+ width:900px; 
+background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);/*ie*/
+background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b8c4cb), to(#f6f6f8));/*火狐*/
+ background: -ms-linear-gradient(top, #b8c4cb,  #f6f6f8);/*谷歌*/
+ margin-top:80px;
+ margin-left:40px;
+}
+#location{
+	width:900px; 
+	 margin-top:1px;
+ margin-left:10px;
+}
+ #good{
+ padding-left:270px;
+ padding-top:30px;
+	font-size:18px;
+	height:600px;
+ width:600px; 
+background:-moz-linear-gradient(top,#b8c4cb,#f6f6f8);/*ie*/
+background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#b8c4cb), to(#f6f6f8));/*火狐*/
+ background: -ms-linear-gradient(top, #b8c4cb,  #f6f6f8);/*谷歌*/
+ margin-top:80px;
+ margin-left:40px;
+}
+</style>
