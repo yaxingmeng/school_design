@@ -130,9 +130,9 @@ public class EnumName {
     
     public enum GoodTypeState {
 
-        ON(0,"启用"),
+        ON(0,"待付款"),
 
-        off(1,"禁用"),;
+        off(1,"已支付"),;
 
         private int value;
 
@@ -168,6 +168,89 @@ public class EnumName {
             return es == null ? "" : es.getCaption();
         }
     }
-    
-    
+
+    public enum PaySate {
+        UNPAY(0,"待付款"),
+
+        PAY(1,"已支付"),;
+
+
+        private int value;
+
+        private String caption;
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getCaption() {
+            return caption;
+        }
+
+        PaySate(int value, String caption) {
+            this.value = value;
+            this.caption = caption;
+        }
+
+        public static PaySate getOf(Integer v) {
+            if (v == null) {
+                return null;
+            }
+            for (PaySate status : values()) {
+                if (v == status.getValue()) {
+                    return status;
+                }
+            }
+            return null;
+        }
+        public static String getCaptionByValue(Integer v) {
+            PaySate es = getOf(v);
+            return es == null ? "" : es.getCaption();
+        }
+    }
+
+
+    public enum TranState {
+
+        UNDILIVERY(0,"未发货"),
+
+        DELIVERY(1,"已发货"),
+
+        RECEIVED(2,"已收货"),;
+
+        private int value;
+
+        private String caption;
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getCaption() {
+            return caption;
+        }
+
+        TranState(int value, String caption) {
+            this.value = value;
+            this.caption = caption;
+        }
+
+        public static TranState getOf(Integer v) {
+            if (v == null) {
+                return null;
+            }
+            for (TranState status : values()) {
+                if (v == status.getValue()) {
+                    return status;
+                }
+            }
+            return null;
+        }
+        public static String getCaptionByValue(Integer v) {
+            TranState es = getOf(v);
+            return es == null ? "" : es.getCaption();
+        }
+    }
+
+
 }

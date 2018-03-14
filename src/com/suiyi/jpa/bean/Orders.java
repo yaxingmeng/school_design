@@ -1,5 +1,7 @@
 package com.suiyi.jpa.bean;
 
+import com.suiyi.jpa.Utils.EnumName;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -33,8 +35,17 @@ public class Orders extends BasicBean {
 	@Column(name = "tran_state")
 	private Integer tranState;
 
+	@Column(name = "location")
+	private String location;
+
+	@Column(name = "phone")
+	private String phone;
+
+	@Column(name = "contact")
+	private String contact;
+
 	@OneToOne
-	@JoinColumn(name = "user", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User user;
 
 	@OneToMany
@@ -96,7 +107,31 @@ public class Orders extends BasicBean {
 	public void setOrderItem(List<OrderItem> orderItem) {
 		this.orderItem = orderItem;
 	}
-	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
 	public Double getTotalPrice(){
 		Double price=0.0;
 		for(OrderItem orderIt:orderItem){
@@ -104,5 +139,13 @@ public class Orders extends BasicBean {
 		}
 		return price;
 	}
+
+	public String  getPayStateName(){
+		return EnumName.PaySate.getCaptionByValue(payState);
+	}
+
+	public String getTransStateName(){
+		return EnumName.TranState.getCaptionByValue(tranState)
+;	}
 
 }

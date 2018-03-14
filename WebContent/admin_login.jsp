@@ -78,9 +78,8 @@
 			</form>
 			<form>
 				<div id="tagContent1" class="tagContent">
-					订单管理：<br/><br> 用户名:<input type="text" name="name"><br /> <br />
-					密&emsp; 码:<input type="text" name="password"><br /><br/> <input
-						type="submit" value="提交">
+					订单管理：<br/><br>
+					<a href="order_list.do?pagenumber=1&adminName=${admin.name }">订单列表</a><br><br>
 				</div>
 			</form>
 			<form action="">

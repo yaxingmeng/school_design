@@ -34,13 +34,22 @@ public class OrderService extends BasicService<Orders, Integer> {
         return ordersRepository.findByOrderNoOrUserNickname(nameOrNo,pageable);
     }
 
-    public Page<Orders> findByCreateTime(Integer pagesize, Integer pagenumber,Date time) {
+    public Page<Orders> findByCreateTime(Integer pagesize, Integer pagenumber,Date start,Date end) {
         Pageable pageable = new PageRequest(pagenumber, pagesize);
-        return ordersRepository.findByCreateTime(time,pageable);
+        return ordersRepository.findByCreateTimeBetween(start,end,pageable);
     }
 
-  /*  public List<Orders> findByNameOrNoAndCreateTime(String nameOrNo,Date time){
-        return ordersRepository.findByOrderNoOrUserNicknameAndCreateTime(nameOrNo,time);
-    }*/
+   public List<Orders> findByNameOrNoAndCreateTime(String nameOrNo,Date start,Date end,Integer pagenumber){
+        Integer mount=10*pagenumber;
+        return ordersRepository.findByOrderNoOrUserNicknameAndCreateTime(nameOrNo,end,start,mount);
+    }
 
+    public Orders detail(Integer id){
+       return ordersRepository.findOne(id);
+    }
+
+    public Orders save(Orders orders){
+        ordersRepository.save(orders);
+        return orders;
+    }
 }
