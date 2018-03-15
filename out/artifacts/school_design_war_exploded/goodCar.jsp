@@ -101,6 +101,7 @@
     <div id="main">
    <c:if test="${goodCar==null }">购物车里还没有东西，快去添加吧！<br><br></c:if>
    <c:if test="${goodCar!=null }">
+       <form action="order_car_detail.do" name="payAll">
         <table id="mytable">
             <tr>
                 <td>
@@ -127,11 +128,13 @@
                     </c:if></td>
                 <td></td>
                 <td><input type="button" value="删除" class="delete" name="deleteGoods" onclick="window.location='goodcar_delete.do?goodCarId=${goodCar.id }&pagesize=10&pagenumber=${page[0] }&userName=${userName }'"></td>
-                <td><input type="button" value="结算" class="delete" name="pay"></td>
+                <td><input type="button" value="结算" class="delete" name="order_car_detail.do?ck1=${goodCar.id}&userName=${userName}"></td>
             </tr>
             </c:forEach>
             <tr><td colspan="5" align="right">总费用：<span id="sum"></span></td></tr>
-            <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete"> </td></tr>
+            <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete"> </td>
+            <td colspan="5"><input type="submit" value="结算所选项" id="payAll" onclick="pay()"></td>
+            </tr>
         </table>
         <input type="hidden" name="pagenumber" value="${page[0]}">
         <input type="hidden" name="userName" value="${userName }">
@@ -146,7 +149,15 @@
 </c:if>
 <a href = "goodcar_list.do?pagesize=10&pagenumber=${page[1] }&userName=${userName }" >尾页</a>
 第${page[0]}页/共${page[1]}页
+
+       </form>
     </div>   
 </div>
+<script type="text/javascript">
+    function pay(){
+        document.payAll.submit();
+    }
+
+</script>
 </body>
 </html>

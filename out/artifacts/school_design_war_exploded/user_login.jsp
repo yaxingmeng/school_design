@@ -18,7 +18,7 @@
 			<li class="selectTag0"><a href="javascript:void(0)"
 				onclick="window.location='goodcar_list.do?pagesize=10&pagenumber=1&userName=${userName}'">购物车</a></li>
 			<li class="selectTag1"><a href="javascript:void(0)"
-				onclick="selectTag('tagContent1','selectTag1')">我的订单</a></li>
+				onclick="window.location='order_list_user.do?pagenumber=1&userName=${userName}'">我的订单</a></li>
 			<li class="selectTag2"><a href="javascript:void(0)"
 				onclick="window.location='user_info.do?nickname=${userName}'">我的信息</a></li>
 		</ul>
@@ -27,7 +27,12 @@
             
 				<div id="tagContent3" class="tagContent">
 					商品:
-					<br>&emsp;&emsp;&emsp;&emsp;
+					<br>
+					<c:choose>
+						<c:when test="${operate!=null}">
+								<jsp:include page="addOrder.jsp" />
+						</c:when>
+						<c:otherwise>
 					 <form action="good_list_user.do">
 					<input type="hidden" name="pagesize" value="10">
 					<input type="hidden" name="pagenumber" value="1"> 
@@ -44,17 +49,34 @@
 					<div id="good">
 					<jsp:include page="goodsUser.jsp" />
 					</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			<form action="deleteAllCar.do">
 				<div id="tagContent0" class="tagContent">
 					购物车:
-					<jsp:include page="goodCar.jsp" />
+					<c:choose>
+						<c:when test="${operate!=null}">
+							<jsp:include page="orderFromCar.jsp" />
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="goodCar.jsp" />
+						</c:otherwise>
+					</c:choose>
+
 				</div>		
 			</form>
 			<form action="">
 				<div id="tagContent1" class="tagContent">
 					我的订单:
-					
+					<c:choose>
+						<c:when test="${operate!=null}">
+							<jsp:include page="orderDetailUser.jsp" />
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="orderUser.jsp" />
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</form>
 			
@@ -142,6 +164,13 @@
 	}
 	  </script>
 	</c:when>
+	   <c:when test="${type==4 }">
+		   <script type="text/javascript">
+               window.onload = function() {
+                   selectTag('tagContent1', 'selectTag1');
+               }
+		   </script>
+	   </c:when>
 	<c:otherwise>
 	<script type="text/javascript">
 	window.onload = function() {

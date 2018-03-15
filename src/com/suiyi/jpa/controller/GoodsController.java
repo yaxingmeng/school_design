@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.suiyi.jpa.bean.User;
+import com.suiyi.jpa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,9 @@ public class GoodsController {
 
 	@Autowired
 	private GoodTypeService goodTypeService;
+
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/good_list.do")
 	public ModelAndView findAll(Integer type, String adminName, Integer pagesize, Integer pagenumber,
@@ -147,6 +152,18 @@ public class GoodsController {
 		List<GoodType> goodTypes = goodTypeService.findAll();
 		request.setAttribute("goodType", goodTypes);
 		return new ModelAndView("user_login", "goods", goods);
+	}
+
+	@RequestMapping(value = "/good_findone.do")
+	public String findOne(Integer id ,String userName,HttpServletRequest request){
+		Goods goods=goodsService.findById(id);
+		User user=userService.findByNickname(userName);
+		request.setAttribute("user",user);
+		request.setAttribute("userName",userName);
+		request.setAttribute("good",goods);
+		request.setAttribute("type",3);
+		request.setAttribute("operate",1);
+		return "user_login";
 	}
 
 

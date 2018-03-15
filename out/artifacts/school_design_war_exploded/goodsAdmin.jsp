@@ -51,7 +51,7 @@
 <a href = "good_list_user.do?pagesize=10&pagenumber=${page[0]+1 }&userName=${userName}" >下一页</a>
 </c:if>
 <a href = "good_list_user.do?pagesize=10&pagenumber=${page[1] }&userName=${userName}" >尾页</a>
-第${page[0]}页/共${page[1]}页&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+第${page[0]}页/共${page[1]}页&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="backMain.do?adminName=${adminName }">返回主菜单</a>
 </c:if>
 </div>
 </div>

@@ -35,6 +35,7 @@
 <input type="hidden" name="name" value="${name}">
 <input type="hidden" name="pagenumber" value="${page[0] }">
  <input type="submit" value="加入购物车" >
+ <input type="button" value="结算" onclick="window.location='good_findone.do?id=${good.id}&userName=${userName}'">
  <input type="hidden" name="amount" id="amount${good.id }">
   <input type="hidden" name="userName" value="${userName }">
   <input type="hidden" name="goodId" value="${good.id }">
