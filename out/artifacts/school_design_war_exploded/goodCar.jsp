@@ -18,12 +18,22 @@
                     $("input[name='ck1']").prop('checked',false);
                 }
             });
- 
+
+            $("#payAll").click(function(){
+                var tag=document.getElementById("operate");
+                tag.val =1;
+                alert(tag.val);
+            });
+            function testSubmit(){
+                var tag=document.getElementById("operate");
+                tag.val =1;
+                alert(tag.val);
+            }
             //删除所选
             $("#deleteSelete").click(function(){
-               /*  $("input[name='ck1']:checked").each(function(){
-                    $(this).parent().parent().remove();
-                }); */
+                /*  $("input[name='ck1']:checked").each(function(){
+                     $(this).parent().parent().remove();
+                 }); */
                 calc();
             });
             //单击删除
@@ -45,7 +55,6 @@
                //$(this).next().val($goodsCount<=1?1:$goodsCount-1);
                 calc();
             });*/
- 
             //计算价格
             function calc(){
                 //找到共有对象
@@ -101,7 +110,7 @@
     <div id="main">
    <c:if test="${goodCar==null }">购物车里还没有东西，快去添加吧！<br><br></c:if>
    <c:if test="${goodCar!=null }">
-       <form action="order_car_detail.do" name="payAll">
+        <form action="order_car_detail.do" name="deleteAll" onsubmit="testSubmit()">
         <table id="mytable">
             <tr>
                 <td>
@@ -132,13 +141,16 @@
             </tr>
             </c:forEach>
             <tr><td colspan="5" align="right">总费用：<span id="sum"></span></td></tr>
-            <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete"> </td>
-            <td colspan="5"><input type="submit" value="结算所选项" id="payAll" onclick="pay()"></td>
+            <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete" > </td>
+            <td colspan="5"><input type="submit" value="结算所选项" id="payAll" ></td>
             </tr>
         </table>
+
         <input type="hidden" name="pagenumber" value="${page[0]}">
+           <input type="hidden" name="pagesize" value="10">
         <input type="hidden" name="userName" value="${userName }">
          <input type="hidden" name="pagecount" value="${page[1] }">
+           <input type="hidden" name="operate" id="operate">
         </c:if>
 <a href = "goodcar_list.do?pagesize=10&pagenumber=1&userName=${userName}" >首页</a>
 <c:if test="${page[0]>1}">
@@ -149,15 +161,8 @@
 </c:if>
 <a href = "goodcar_list.do?pagesize=10&pagenumber=${page[1] }&userName=${userName }" >尾页</a>
 第${page[0]}页/共${page[1]}页
-
-       </form>
-    </div>   
+        </form>
+    </div>
 </div>
-<script type="text/javascript">
-    function pay(){
-        document.payAll.submit();
-    }
-
-</script>
 </body>
 </html>

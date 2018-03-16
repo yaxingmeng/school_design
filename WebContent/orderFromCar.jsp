@@ -61,7 +61,7 @@
 <script type="text/javascript">
 
     function sure() {
-        var a="确认付款吗？";
+        var a="确认付款吗？？？";
         var tag=document.getElementById("payState");
         if (confirm(a)){
             tag.value=1;

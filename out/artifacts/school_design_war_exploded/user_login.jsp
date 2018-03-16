@@ -52,7 +52,7 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-			<form action="deleteAllCar.do">
+
 				<div id="tagContent0" class="tagContent">
 					购物车:
 					<c:choose>
@@ -60,12 +60,12 @@
 							<jsp:include page="orderFromCar.jsp" />
 						</c:when>
 						<c:otherwise>
+
 							<jsp:include page="goodCar.jsp" />
 						</c:otherwise>
 					</c:choose>
 
 				</div>		
-			</form>
 			<form action="">
 				<div id="tagContent1" class="tagContent">
 					我的订单:

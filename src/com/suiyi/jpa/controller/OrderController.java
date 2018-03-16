@@ -257,6 +257,7 @@ public class OrderController {
             totalPrice = totalPrice + goodCar.getGoods().getPrice() * goodCar.getAmount();
         }
         User user = userService.findByNickname(userName);
+        request.setAttribute("userName",userName);
         request.setAttribute("totalPrice", totalPrice);
         request.setAttribute("user", user);
         request.setAttribute("goodCar", goodCars);
