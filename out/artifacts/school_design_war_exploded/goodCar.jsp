@@ -19,11 +19,6 @@
                 }
             });
 
-            $("#payAll").click(function(){
-                var tag=document.getElementById("operate");
-                tag.val =1;
-                alert(tag.val);
-            });
             function testSubmit(){
                 var tag=document.getElementById("operate");
                 tag.val =1;
@@ -35,6 +30,23 @@
                      $(this).parent().parent().remove();
                  }); */
                 calc();
+            });
+            $("#payAll").click(function(){
+                var tag=document.getElementById("operate");
+                tag.val =1;
+                $.ajax({
+                    type: "POST",   //提交的方法
+                    url:"/order_car_detail.do", //提交的地址
+                    data:$('#all').serialize(),// 序列化表单值
+                    async: false,
+                    /*error: function(request) {  //失败的话
+                        alert("Connection error");
+                    },
+                    success: function(data) {  //成功
+                        alert(data);  //就将返回的数据显示出来
+                      //  window.location.href="user_login.jsp"
+                    }*/
+                });
             });
             //单击删除
             $("#mytable .delete").click(function(){
@@ -110,7 +122,7 @@
     <div id="main">
    <c:if test="${goodCar==null }">购物车里还没有东西，快去添加吧！<br><br></c:if>
    <c:if test="${goodCar!=null }">
-        <form action="order_car_detail.do" name="deleteAll" onsubmit="testSubmit()">
+        <form action="deleteAllCar.do" id="all" name="deleteAll" onsubmit="testSubmit()">
         <table id="mytable">
             <tr>
                 <td>
@@ -142,7 +154,7 @@
             </c:forEach>
             <tr><td colspan="5" align="right">总费用：<span id="sum"></span></td></tr>
             <tr><td colspan="5"><input type="submit" value="删除选中的项" id="deleteSelete" > </td>
-            <td colspan="5"><input type="submit" value="结算所选项" id="payAll" ></td>
+            <td colspan="5"><input type="button" value="结算所选项" id="payAll"  ></td>
             </tr>
         </table>
 

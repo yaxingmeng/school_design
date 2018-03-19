@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -225,18 +226,18 @@ public class OrderController {
         orders.setPhone(userLocation.getPhone());
         orders.setContact(userLocation.getConnector());
         orders.setLocation(userLocation.getLocation());
-        orderService.fillCreate(orders,userName);
+        orderService.fillCreate(orders, userName);
         orderService.save(orders);
-        List<OrderItem> orderItemList=new ArrayList<>();
+        List<OrderItem> orderItemList = new ArrayList<>();
         for (int i = 0; i < ck1.length; i++) {
             GoodCar goodCar = goodCarService.detail(ck1[i]);
-            OrderItem orderItem=new OrderItem();
+            OrderItem orderItem = new OrderItem();
             orderItem.setOrderId(orders.getId());
             orderItem.setUser(user);
             orderItem.setUserId(user.getId());
             orderItem.setGoods(goodCar.getGoods());
             orderItem.setAmount(goodCar.getAmount());
-            orderItemService.fillCreate(orderItem,userName);
+            orderItemService.fillCreate(orderItem, userName);
             orderItemService.save(orderItem);
             orderItemList.add(orderItem);
         }
@@ -248,7 +249,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order_car_detail.do")
-    public String orderCarList(Integer[] ck1, String userName, HttpServletRequest request) {
+    public String orderCarList(Integer[] ck1,Integer operate, String userName, HttpServletRequest request) {
         List<GoodCar> goodCars = new ArrayList<>();
         Double totalPrice = 0.0;
         for (int i = 0; i < ck1.length; i++) {
@@ -257,14 +258,19 @@ public class OrderController {
             totalPrice = totalPrice + goodCar.getGoods().getPrice() * goodCar.getAmount();
         }
         User user = userService.findByNickname(userName);
-        request.setAttribute("userName",userName);
+        request.setAttribute("userName", userName);
         request.setAttribute("totalPrice", totalPrice);
         request.setAttribute("user", user);
         request.setAttribute("goodCar", goodCars);
-        request.setAttribute("ck1", ck1);
+        if (ck1.length == 1) {
+            request.setAttribute("ck1", ck1[0]);
+        } else {
+            request.setAttribute("ck1", ck1);
+        }
         request.setAttribute("type", 2);
         request.setAttribute("operate", 1);
         return "user_login";
     }
+
 
 }
